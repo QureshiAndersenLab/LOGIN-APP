@@ -1,0 +1,13 @@
+<footer class="h-24 p-8 flex gap-[10px] items-center">
+  <div class="flex gap-14">
+    <img src="assets/logo.png" alt="Logo" class="w-[182px] h-6" />
+
+    <a
+      *ngFor="let link of footerLinks"
+      href="{{ link.link }}"
+      class="font-[550] text-base leading-6 tracking-[0.2px]"
+    >
+      {{ link.name }}
+    </a>
+  </div>
+</footer>
