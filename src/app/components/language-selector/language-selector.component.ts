@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   DEFAULT_LANGUAGE,
   Language,
@@ -9,19 +9,27 @@ import {
   selector: 'app-language-selector',
   imports: [CommonModule],
   templateUrl: './language-selector.component.html',
-  styleUrl: './language-selector.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LanguageSelectorComponent {
-  languages = Object.values(Language);
-  selectedLanguage = DEFAULT_LANGUAGE;
-  showDropdown = false;
+  readonly languages: Language[] = Object.values(Language);
+  private selectedLanguage = signal(DEFAULT_LANGUAGE);
+  private showDropdown = signal(false);
 
-  toggleDropdown() {
-    this.showDropdown = !this.showDropdown;
+  toggleDropdown(): void {
+    this.showDropdown.set(!this.showDropdown());
   }
 
-  selectLanguage(lang: Language) {
-    this.selectedLanguage = lang;
-    this.showDropdown = false;
+  selectLanguage(lang: Language): void {
+    this.selectedLanguage.set(lang);
+    this.showDropdown.set(false);
+  }
+
+  get language(): Language {
+    return this.selectedLanguage();
+  }
+
+  get isDropdownOpen(): boolean {
+    return this.showDropdown();
   }
 }

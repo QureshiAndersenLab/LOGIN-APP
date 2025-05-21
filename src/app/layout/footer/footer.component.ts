@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FooterLinks } from '../../shared/models/general.model';
 import { CommonModule } from '@angular/common';
 
@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
   selector: 'app-footer',
   imports: [CommonModule],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  footerLinks: FooterLinks[] = [
+  readonly footerLinks: FooterLinks[] = [
     { name: 'Help Center', link: '' },
     { name: 'Legal information', link: '' },
     { name: 'Privacy statement', link: '' },

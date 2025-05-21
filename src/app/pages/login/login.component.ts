@@ -1,19 +1,19 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'allianz-login',
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   email = '';
 
-  constructor(private location: Location) {}
+  private location = inject(Location);
 
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
 }

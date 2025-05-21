@@ -14,7 +14,8 @@
         fill="#0C164B"
       />
     </svg>
-    <span>{{ selectedLanguage }}</span>
+
+    <span>{{ language }}</span>
 
     <svg
       width="16"
@@ -32,16 +33,18 @@
     </svg>
   </button>
 
+  @if (isDropdownOpen) {
   <ul
-    *ngIf="showDropdown"
     class="absolute right-0 mt-2 w-20 sm:w-24 bg-white border border-gray-200 rounded shadow-md z-50"
   >
+    @for (lang of languages; track lang) {
     <li
-      *ngFor="let lang of languages"
       (click)="selectLanguage(lang)"
       class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-xs sm:text-sm"
     >
       {{ lang }}
     </li>
+    }
   </ul>
+  }
 </div>

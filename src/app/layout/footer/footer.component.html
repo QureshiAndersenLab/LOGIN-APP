@@ -6,12 +6,13 @@
       class="h-4 sm:h-6 w-auto max-w-[182px] mb-4 sm:mb-0"
     />
 
+    @for (link of footerLinks; track $index) {
     <a
-      *ngFor="let link of footerLinks"
       href="{{ link.link }}"
       class="font-[550] sm:text-base text-[12px] leading-6 tracking-[0.2px]"
     >
       {{ link.name }}
     </a>
+    }
   </div>
 </footer>
