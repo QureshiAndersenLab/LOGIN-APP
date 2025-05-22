@@ -18,8 +18,9 @@
     "baseUrl": "src",
     "paths": {
       "@components": ["app/components"],
-      "@shared/constants": ["app/shared/constants"],
-      "@shared/models": ["app/shared/models"]
+      "@shared/*": ["app/shared/*"],
+      "@directives": ["app/directives"],
+      "@services": ["app/services"]
     }
   },
   "angularCompilerOptions": {
