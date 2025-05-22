@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent, FooterComponent } from '@layout';
+import { NavbarComponent, FooterComponent } from '../../layout';
 
 @Component({
   selector: 'allianz-login',
