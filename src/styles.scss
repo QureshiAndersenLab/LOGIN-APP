@@ -1,1 +1,9 @@
 @import "tailwind-import.css";
+
+html,
+body {
+  font-family: HelveticaNeueCyr;
+  background-color: white;
+  height: 100%;
+  margin: 0;
+}
