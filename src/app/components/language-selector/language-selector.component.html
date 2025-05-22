@@ -15,7 +15,7 @@
       />
     </svg>
 
-    <span>{{ language }}</span>
+    <span> {{ selectedLanguage() }} </span>
 
     <svg
       width="16"
@@ -33,7 +33,7 @@
     </svg>
   </button>
 
-  @if (isDropdownOpen) {
+  @if (showDropdown()) {
   <ul
     class="absolute right-0 mt-2 w-20 sm:w-24 bg-white border border-gray-200 rounded shadow-md z-50"
   >

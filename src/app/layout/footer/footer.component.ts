@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FooterLinks } from '../../shared/models/general.model';
+import { FooterLinks } from '@shared/models';
 import { CommonModule } from '@angular/common';
 
 @Component({

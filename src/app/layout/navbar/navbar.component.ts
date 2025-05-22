@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LanguageSelectorComponent } from '../../components/language-selector/language-selector.component';
+import { LanguageSelectorComponent } from '@components';
 
 @Component({
   selector: 'app-navbar',
