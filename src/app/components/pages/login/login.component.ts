@@ -1,16 +1,15 @@
 import { CommonModule, Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   inject,
+  signal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent, FooterComponent } from '../../layout';
 import { FocusDirective } from '@directives';
-import { emailValidator } from '@shared/validators';
 import { LoginService, OTPService } from '@services';
-import { catchError, finalize, of, switchMap, tap } from 'rxjs';
+import { catchError, finalize, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'allianz-login',
@@ -30,19 +29,18 @@ export class LoginComponent {
   readonly #location: Location = inject(Location);
   readonly #loginService: LoginService = inject(LoginService);
   readonly #otpService: OTPService = inject(OTPService);
-  readonly #changeDetectionRef: ChangeDetectorRef = inject(ChangeDetectorRef);
 
-  OTPCode: string | null = null;
+  OTPCode = signal('');
   errorMessage: string = '';
-  isLoading: boolean = false;
+  isLoading = signal(false);
 
   loginForm = this.#formBuilder.group({
-    email: ['', [Validators.required, emailValidator]],
+    email: ['', [Validators.required, Validators.email]],
   });
 
   isFieldInvalid(field: string): boolean {
     const control = this.loginForm.get(field);
-    return !!(control && control.errors?.['invalidEmail'] && control.touched);
+    return !!(control && control.invalid && (control.touched || control.dirty));
   }
 
   goBack(): void {
@@ -52,28 +50,28 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.invalid) return;
 
-    this.isLoading = true;
+    this.isLoading.set(true);
 
     this.#loginService
       .getQuote()
       .pipe(
-        switchMap((quote) => {
-          console.log('Quote:', quote);
-          return this.#otpService.generateOtp();
-        }),
-        tap((otp) => {
-          this.OTPCode = otp;
-          console.log('OTP generated:', this.OTPCode);
-        }),
+        switchMap(() => this.#otpService.generateOtp()),
         catchError((err) => {
           this.errorMessage = err.message;
           return of(null);
         }),
         finalize(() => {
-          this.isLoading = false;
-          this.#changeDetectionRef.markForCheck();
+          this.isLoading.set(false);
         })
       )
-      .subscribe();
+      .subscribe({
+        next: (otp) => {
+          if (otp) {
+            this.OTPCode.set(otp);
+            console.log('OTP generated:', otp);
+          }
+        },
+        error: (err) => console.error('Unexpected error:', err),
+      });
   }
 }

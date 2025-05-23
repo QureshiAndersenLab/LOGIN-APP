@@ -79,9 +79,9 @@
         <button
           type="submit"
           class="py-3 px-8 font-[550] text-4 leading-[24px] tracking-[0.2px] bg-brandBlue text-white rounded-sm disabled:bg-[#C2C2C2]"
-          [disabled]="loginForm.invalid || isLoading"
+          [disabled]="loginForm.invalid || isLoading()"
         >
-          {{ isLoading ? "Loading..." : "Continue" }}
+          {{ isLoading() ? "Loading..." : "Continue" }}
         </button>
       </form>
     </div>
