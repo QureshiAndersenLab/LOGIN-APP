@@ -41,11 +41,6 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
   });
 
-  isFieldInvalid(field: string): boolean {
-    const control = this.loginForm.get(field);
-    return !!(control && control.invalid && (control.touched || control.dirty));
-  }
-
   goBack(): void {
     this.#location.back();
   }

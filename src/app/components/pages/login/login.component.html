@@ -61,12 +61,15 @@
             type="email"
             name="email"
             [ngClass]="{
-              'input-error': isFieldInvalid('email')
+              'input-error':
+                loginForm.get('email')?.touched &&
+                loginForm.get('email')?.invalid
             }"
             formControlName="email"
             class="w-full px-2 py-1 border-b focus:outline-none"
           />
-          @if (isFieldInvalid('email')) {
+          @if (loginForm.get('email')?.touched &&
+          loginForm.get('email')?.invalid) {
           <div class="error-message">
             <img
               src="../../../../assets/icons/invalid-error.png"
