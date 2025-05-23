@@ -16,6 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptors([errorInterceptor])),
-    { provide: KANYE_API_URL, useValue: 'https://api.kanye.est' },
+    { provide: KANYE_API_URL, useValue: 'https://api.kanye.rest' },
   ],
 };
