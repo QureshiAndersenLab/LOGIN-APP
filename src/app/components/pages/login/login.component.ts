@@ -31,7 +31,7 @@ export class LoginComponent {
   readonly #otpService: OTPService = inject(OTPService);
 
   OTPCode = signal('');
-  errorMessage: string = '';
+  errorMessage = signal('');
   isLoading = signal(false);
 
   loginForm = this.#formBuilder.group({
@@ -56,8 +56,10 @@ export class LoginComponent {
       .getQuote()
       .pipe(
         switchMap(() => this.#otpService.generateOtp()),
+        // self NOTE: now catchError can be optional since we have error interceptor now, yet this is required for component specific error handling
         catchError((err) => {
-          this.errorMessage = err.message;
+          this.errorMessage.set(err.message);
+          console.log('Error from catchError:', this.errorMessage());
           return of(null);
         }),
         finalize(() => {
