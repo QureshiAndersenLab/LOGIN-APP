@@ -2,6 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   signal,
 } from '@angular/core';
@@ -9,7 +10,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent, FooterComponent } from '../../layout';
 import { FocusDirective } from '@directives';
 import { LoginService, OTPService } from '@services';
-import { catchError, finalize, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'allianz-login',
@@ -29,10 +31,11 @@ export class LoginComponent {
   readonly #location: Location = inject(Location);
   readonly #loginService: LoginService = inject(LoginService);
   readonly #otpService: OTPService = inject(OTPService);
+  readonly #destroyRef = inject(DestroyRef);
 
-  OTPCode = signal('');
-  errorMessage = signal('');
-  isLoading = signal(false);
+  readonly OTPCode = signal('');
+  readonly errorMessage = signal('');
+  readonly isLoading = signal(false);
 
   loginForm = this.#formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -60,18 +63,17 @@ export class LoginComponent {
         catchError((err) => {
           this.errorMessage.set(err.message);
           console.log('Error from catchError:', this.errorMessage());
-          return of(null);
+          return EMPTY;
         }),
         finalize(() => {
           this.isLoading.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.#destroyRef)
       )
       .subscribe({
         next: (otp) => {
-          if (otp) {
-            this.OTPCode.set(otp);
-            console.log('OTP generated:', otp);
-          }
+          this.OTPCode.set(otp);
+          console.log('OTP generated:', otp);
         },
         error: (err) => console.error('Unexpected error:', err),
       });

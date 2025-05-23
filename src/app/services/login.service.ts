@@ -14,6 +14,6 @@ export class LoginService {
   getQuote(): Observable<string> {
     return this.#http
       .get<QuoteResponse>(this.#url)
-      .pipe(map((res) => res.quote));
+      .pipe(map(({ quote }) => quote));
   }
 }
