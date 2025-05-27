@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarComponent } from '@components';
+import { LanguageSelectorComponent, NavbarComponent } from '@components';
+import { DEFAULT_LANGUAGE } from '@shared/constants';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -7,16 +8,31 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent]
-    })
-    .compileComponents();
+      imports: [NavbarComponent, LanguageSelectorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create NavbarComponent', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render the logo with correct src and alt attributes', () => {
+    const navbar = fixture.nativeElement;
+    const logo = navbar.querySelector('[data-testId="nav-logo"]');
+    expect(logo).toBeTruthy();
+    expect(logo.getAttribute('src')).toContain('logo.png');
+    expect(logo.getAttribute('alt')).toBe('Logo');
+  });
+
+  it('should render default selected language', () => {
+    const navbar = fixture.nativeElement;
+    const selectedLang = navbar
+      .querySelector('[data-testId="selected-lang"]')
+      .textContent.trim();
+    expect(selectedLang).toBe(DEFAULT_LANGUAGE);
   });
 });
