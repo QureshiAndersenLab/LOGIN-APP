@@ -32,7 +32,7 @@ export class LoginComponent {
   readonly errorMessage = signal('');
   readonly isLoading = signal(false);
 
-  readonly loginStep = signal<LoginStep>(LOGIN_STEPS.OTP);
+  readonly loginStep = signal<LoginStep>(LOGIN_STEPS.EMAIL);
 
   loginForm = this.#formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
