@@ -1,1 +1,38 @@
-<router-outlet />
+<app-navbar />
+
+<div class="flex flex-col md:flex-row h-screen">
+  <div
+    data-testId="insurance-lady-img"
+    class="relative w-full md:w-[600px] h-full"
+  >
+    <img
+      src="../../../../assets/allianz-login.png"
+      alt="Insurance Lady"
+      class="w-full h-full object-cover absolute"
+    />
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 bg-black/40"
+    >
+      <h2 class="text-[18px] md:text-[28px] tracking-[0.2px]">
+        Welcome to your
+      </h2>
+      <h2 class="text-[32px] md:text-[40px] font-bold tracking-[0.2px]">
+        Insurance portal
+      </h2>
+      <p
+        class="w-[350px] md:w-[450px] text-sm md:text-[20px] leading-[18px] md:leading-[24px] text-center align-middle"
+      >
+        Your complete insurance hub – manage your policies, file claims, and
+        discover customized coverage solutions with simplicity
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="relative bg-white w-full md:w-1/2 px-8 pt-4 md:pt-8 pb-7 md:pb-14"
+  >
+    <router-outlet />
+  </div>
+</div>
+
+<app-footer />
