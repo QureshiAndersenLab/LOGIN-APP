@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/layout/footer/footer.component';
 import { NavbarComponent } from './components/layout/navbar/navbar.component';
+import { AppRoutes } from './app.routes';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,7 @@ export class AppComponent {
 
   goBack(): void {
     const currentUrl = this.#router.url;
-    console.log('this.#router', this.#router.url);
-    if (currentUrl === '/otp') {
+    if (currentUrl === AppRoutes.OTP) {
       this.#router.navigate(['/']);
     }
   }

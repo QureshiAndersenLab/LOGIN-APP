@@ -12,6 +12,7 @@ import { LoginService, OTPService } from '@services';
 import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { AppRoutes } from 'app/app.routes';
 
 @Component({
   selector: 'allianz-login',
@@ -30,7 +31,7 @@ export class LoginComponent {
   readonly errorMessage = signal('');
   readonly isLoading = signal(false);
 
-  loginForm = this.#formBuilder.group({
+  readonly loginForm = this.#formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
 
@@ -57,7 +58,7 @@ export class LoginComponent {
       .subscribe({
         next: (otp) => {
           console.log('OTP generated:', otp);
-          this.#router.navigate(['/otp'], {
+          this.#router.navigate([AppRoutes.OTP], {
             state: { email: this.loginForm.value.email },
           });
         },

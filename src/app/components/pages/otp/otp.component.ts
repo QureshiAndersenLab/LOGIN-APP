@@ -14,9 +14,9 @@ export class OtpComponent implements OnInit {
   readonly #formBuilder: FormBuilder = inject(FormBuilder);
   readonly #router = inject(Router);
 
-  email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
+  readonly email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
 
-  otpForm = this.#formBuilder.group(
+  readonly otpForm = this.#formBuilder.group(
     Object.fromEntries(
       Array.from({ length: OTP_LENGTH }).map((_, i) => [
         i.toString(),
@@ -25,7 +25,7 @@ export class OtpComponent implements OnInit {
     )
   );
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.email) {
       this.#router.navigate(['/']);
     }
