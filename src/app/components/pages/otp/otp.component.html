@@ -1,0 +1,77 @@
+<form
+  [formGroup]="otpForm"
+  class="flex flex-col gap-5 md:gap-10 w-full max-w-md md:mt-16"
+>
+  <div class="flex flex-col justify-center gap-4 md:gap-8">
+    <div class="flex flex-col justify-center gap-2">
+      <h2
+        class="text-[20px] md:text-[30px] font-[550] leading-[40px] tracking-[0.3px]"
+      >
+        OTP Verification
+      </h2>
+      <p
+        class="text-xs md:text-[16px] font-normal leading-[24px] tracking-[0.3px]"
+      >
+        We've sent a 6-digit verification code to your email address
+        <span class="font-bold">{{ email }}</span
+        >. Please enter the code to continue.
+      </p>
+    </div>
+
+    <div class="flex gap-2 justify-between" otp-group>
+      <input
+        *ngFor="let ctrl of otpControls; let i = index"
+        formControlName="{{ ctrl }}"
+        maxlength="1"
+        class="w-[32px] md:w-[56px] h-[42px] md:h-[72px] text-center border border-[#1F1F1F] rounded-lg text-sm md:text-xl text-sm sm:text-[30px] font-[550] leading-[24px] tracking-[0.2px]"
+        type="text"
+        appOtpInput
+        [index]="i"
+      />
+    </div>
+
+    <div class="flex flex-col justify-center gap-3 md:gap-6">
+      <button
+        type="submit"
+        class="py-3 px-8 font-[550] text-sm md:text-[16px] leading-[16px] md:leading-[24px] tracking-[0.2px] bg-brandBlue text-white rounded-sm disabled:bg-[#C2C2C2]"
+        [disabled]="otpForm.invalid"
+      >
+        Submit
+      </button>
+      <button
+        class="text-[12px] md:text-[16px] text-brandBlue font-[550] leading-[24px] tracking-[0.2px]"
+      >
+        Resend Code
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="flex flex-col justify-center gap-3 md:gap-6">
+    <div class="flex gap-2 items-start">
+      <img
+        src="../../../../assets/icons/info-circle.png"
+        alt="info-circle"
+        class="w-[16px] sm:w-[24px] h-[16px] sm:h-[24px]"
+      />
+      <p
+        class="text-xs sm:text-[16px] font-normal leading-[24px] tracking-[0.2px]"
+      >
+        If you have recently signed up or updated your email address in the bank
+        application, the code might not be delivered. In this case, please allow
+        some time for our records to update.
+      </p>
+    </div>
+    <div class="flex justify-center items-center gap-2">
+      <p
+        class="text-xs sm:text-[16px] font-normal leading-[24px] tracking-[0.3px]"
+      >
+        Need help?
+      </p>
+      <a
+        href="#"
+        class="text-xs sm:text-[16px] font-[550] leading-[24px] tracking-[0.2px]"
+        >Contact Allianz Support</a
+      >
+    </div>
+  </div>
+</form>

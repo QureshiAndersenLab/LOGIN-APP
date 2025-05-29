@@ -5,4 +5,8 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./components').then((c) => c.LoginComponent),
   },
+  {
+    path: 'otp',
+    loadComponent: () => import('./components').then((c) => c.OtpComponent),
+  },
 ];
