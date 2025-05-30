@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,43 +7,33 @@ import {
   signal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NavbarComponent, FooterComponent } from '../../layout';
 import { FocusDirective } from '@directives';
 import { LoginService, OTPService } from '@services';
 import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { AppRoutes } from 'app/app.routes';
 
 @Component({
   selector: 'allianz-login',
-  imports: [
-    ReactiveFormsModule,
-    NavbarComponent,
-    FooterComponent,
-    FocusDirective,
-    CommonModule,
-  ],
+  imports: [ReactiveFormsModule, FocusDirective, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   readonly #formBuilder: FormBuilder = inject(FormBuilder);
-  readonly #location: Location = inject(Location);
   readonly #loginService: LoginService = inject(LoginService);
   readonly #otpService: OTPService = inject(OTPService);
   readonly #destroyRef = inject(DestroyRef);
+  readonly #router = inject(Router);
 
-  readonly OTPCode = signal('');
   readonly errorMessage = signal('');
   readonly isLoading = signal(false);
 
-  loginForm = this.#formBuilder.group({
+  readonly loginForm = this.#formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
-
-  goBack(): void {
-    this.#location.back();
-  }
 
   onSubmit(): void {
     if (this.loginForm.invalid) return;
@@ -67,8 +57,10 @@ export class LoginComponent {
       )
       .subscribe({
         next: (otp) => {
-          this.OTPCode.set(otp);
           console.log('OTP generated:', otp);
+          this.#router.navigate([AppRoutes.OTP], {
+            state: { email: this.loginForm.value.email },
+          });
         },
         error: (err) => console.error('Unexpected error:', err),
       });
