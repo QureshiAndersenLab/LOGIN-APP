@@ -16,7 +16,7 @@ export class AppComponent {
 
   goBack(): void {
     const currentUrl = this.#router.url;
-    if (currentUrl === AppRoutes.OTP) {
+    if (currentUrl.includes(AppRoutes.OTP)) {
       this.#router.navigate(['/']);
     }
   }

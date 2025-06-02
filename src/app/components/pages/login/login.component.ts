@@ -18,7 +18,6 @@ import { AppRoutes } from 'app/app.routes';
   selector: 'allianz-login',
   imports: [ReactiveFormsModule, FocusDirective, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
@@ -58,6 +57,7 @@ export class LoginComponent {
       .subscribe({
         next: (otp) => {
           console.log('OTP generated:', otp);
+          this.#otpService.setOTP(otp);
           this.#router.navigate([AppRoutes.OTP], {
             state: { email: this.loginForm.value.email },
           });
