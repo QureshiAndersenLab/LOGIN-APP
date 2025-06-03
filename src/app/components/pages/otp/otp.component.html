@@ -42,19 +42,19 @@
         [formName]="otpForm"
         [ngClass]="{
           'border-red-500 text-red-500 focus:border-red-500':
-            otpService.isOTPInvalid() || otpService.isExpired()
+            isOTPInvalid() || isExpired()
         }"
       />
       }
     </div>
 
-    @if(otpService.isOTPInvalid()){
+    @if(isOTPInvalid()){
     <div class="error-message">
       <img
         src="../../../../assets/icons/invalid-error.png"
         alt="invalid error"
       />
-      <span>{{ otpService.errorMessage() }}</span>
+      <span>{{ errorMessage() }}</span>
     </div>
     }
 
@@ -62,7 +62,7 @@
       <button
         type="submit"
         class="py-3 px-8 font-[550] text-sm md:text-[16px] leading-[16px] md:leading-[24px] tracking-[0.2px] bg-brandBlue text-white rounded-sm disabled:bg-[#C2C2C2]"
-        [disabled]="otpForm.invalid || !otpService.canSubmitOTP()"
+        [disabled]="otpForm.invalid || isExpired()"
       >
         Submit
       </button>

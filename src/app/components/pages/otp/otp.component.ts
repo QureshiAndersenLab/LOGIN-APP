@@ -15,12 +15,17 @@ import { AppRoutes } from 'app/app.routes';
 export class OtpComponent implements OnInit {
   readonly #formBuilder: FormBuilder = inject(FormBuilder);
   readonly #router = inject(Router);
-  readonly otpService = inject(OTPService);
+  readonly #otpService = inject(OTPService);
   readonly newOTPRequested = signal<boolean>(false);
   readonly email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
+  readonly isCheckingOTP = signal<boolean>(false);
+
+  readonly isOTPInvalid = this.#otpService.isOTPInvalid;
+  readonly isExpired = this.#otpService.isExpired;
+  readonly errorMessage = this.#otpService.errorMessage;
 
   ngOnInit(): void {
-    if (!this.email || !this.otpService.receivedOTP()) {
+    if (!this.email || !this.#otpService.receivedOTP()) {
       this.#router.navigate([AppRoutes.Login]);
     }
   }
@@ -39,10 +44,11 @@ export class OtpComponent implements OnInit {
   }
 
   resendOTP(): void {
-    this.otpService.generateOtp().subscribe({
+    this.#otpService.generateOtp().subscribe({
       next: (otp) => {
         console.log('OTP regenerated:', otp);
-        this.otpService.setOTP(otp);
+        this.resetOtpFields();
+        this.#otpService.setOTP(otp);
         this.newOTPRequested.set(true);
       },
 
@@ -51,9 +57,20 @@ export class OtpComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.otpService.isOTPInvalid()) return;
+  resetOtpFields(): void {
+    this.otpControls.forEach((ctrl) => this.otpForm.get(ctrl)?.setValue(''));
+  }
 
-    this.#router.navigate([AppRoutes.Dashboard]);
+  onSubmit(): void {
+    const allInputs = document.querySelectorAll('input');
+    const enteredOTP = Array.from(allInputs)
+      .map((i) => i.value)
+      .join('');
+
+    this.isCheckingOTP.set(true);
+    this.#otpService.validateOTP(enteredOTP).subscribe((isValid) => {
+      this.isCheckingOTP.set(false);
+      if (isValid) this.#router.navigate([AppRoutes.Dashboard]);
+    });
   }
 }

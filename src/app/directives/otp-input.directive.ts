@@ -38,11 +38,6 @@ export class OtpInputDirective {
       const nextInput = allInputs[idx + 1] as HTMLInputElement;
       nextInput.focus();
     }
-
-    if (idx === allInputs.length - 1) {
-      const values = allInputs.map((input) => input.value).join('');
-      this.#OTPService.validateOTP(values);
-    }
   }
 
   @HostListener('keydown', ['$event'])
