@@ -9,7 +9,8 @@ import {
   interval,
   Observable,
   of,
-  Subscription,
+  Subject,
+  takeUntil,
   takeWhile,
   tap,
 } from 'rxjs';
@@ -22,14 +23,14 @@ export class OTPService implements OnDestroy {
   readonly otpExpiryTimer = signal<number>(OTP_EXPIRY_SEC);
   readonly isExpired = computed(() => this.otpExpiryTimer() <= 0);
 
-  private otpIntervalSubscription!: Subscription;
+  readonly stop$ = new Subject<void>();
 
   generateOtp(length: number = 6): Observable<string> {
     this.reset();
     const otp = Array.from({ length }, () =>
       Math.floor(Math.random() * 10)
     ).join('');
-    this.#startExpiryCountdown();
+    this.#startExpiryCountdown().subscribe();
     return of(otp);
   }
 
@@ -37,24 +38,23 @@ export class OTPService implements OnDestroy {
     this.receivedOTP.set(value);
   }
 
-  #startExpiryCountdown(): void {
-    this.otpIntervalSubscription?.unsubscribe();
+  #startExpiryCountdown(): Observable<number> {
+    this.stop$.next();
     this.otpExpiryTimer.set(OTP_EXPIRY_SEC);
 
-    this.otpIntervalSubscription = interval(1000)
-      .pipe(
-        takeWhile(() => this.otpExpiryTimer() > 0),
-        tap(() => {
-          const time = this.otpExpiryTimer() - 1;
-          this.otpExpiryTimer.set(time);
+    return interval(1000).pipe(
+      takeWhile(() => this.otpExpiryTimer() > 0),
+      tap(() => {
+        const time = this.otpExpiryTimer() - 1;
+        this.otpExpiryTimer.set(time);
 
-          if (time <= 0) {
-            this.isOTPInvalid.set(true);
-            this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
-          }
-        })
-      )
-      .subscribe();
+        if (time <= 0) {
+          this.isOTPInvalid.set(true);
+          this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
+        }
+      }),
+      takeUntil(this.stop$)
+    );
   }
 
   validateOTP(value: string): Observable<boolean> {
@@ -86,6 +86,7 @@ export class OTPService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.otpIntervalSubscription.unsubscribe();
+    this.stop$.next();
+    this.stop$.complete();
   }
 }
