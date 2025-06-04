@@ -59,17 +59,24 @@ export class OTPService implements OnDestroy {
 
   validateOTP(value: string): Observable<boolean> {
     if (this.isExpired()) {
-      this.isOTPInvalid.set(true);
-      this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
-      return of(false).pipe(delay(1000));
+      return of(false).pipe(
+        tap(() => {
+          this.isOTPInvalid.set(true);
+          this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
+        }),
+        delay(1000)
+      );
     }
 
     const isValid = value === this.receivedOTP();
 
-    this.isOTPInvalid.set(!isValid);
-    this.errorMessage.set(isValid ? '' : OTP_INVALID_ERROR_MSG);
-
-    return of(isValid).pipe(delay(1000));
+    return of(isValid).pipe(
+      tap((isValid) => {
+        this.isOTPInvalid.set(!isValid);
+        this.errorMessage.set(isValid ? '' : OTP_INVALID_ERROR_MSG);
+      }),
+      delay(1000)
+    );
   }
 
   reset(): void {

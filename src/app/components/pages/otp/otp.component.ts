@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OtpInputDirective } from '@directives';
@@ -11,11 +19,13 @@ import { AppRoutes } from 'app/app.routes';
   selector: 'allianz-otp',
   imports: [ReactiveFormsModule, CommonModule, OtpInputDirective],
   templateUrl: './otp.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OtpComponent implements OnInit {
   readonly #formBuilder: FormBuilder = inject(FormBuilder);
   readonly #router = inject(Router);
   readonly #otpService = inject(OTPService);
+  readonly #destroyRef = inject(DestroyRef);
   readonly newOTPRequested = signal<boolean>(false);
   readonly email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
   readonly isCheckingOTP = signal<boolean>(false);
@@ -44,17 +54,20 @@ export class OtpComponent implements OnInit {
   }
 
   resendOTP(): void {
-    this.#otpService.generateOtp().subscribe({
-      next: (otp) => {
-        console.log('OTP regenerated:', otp);
-        this.resetOtpFields();
-        this.#otpService.setOTP(otp);
-        this.newOTPRequested.set(true);
-      },
+    this.#otpService
+      .generateOtp()
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe({
+        next: (otp) => {
+          console.log('OTP regenerated:', otp);
+          this.resetOtpFields();
+          this.#otpService.setOTP(otp);
+          this.newOTPRequested.set(true);
+        },
 
-      error: (err) =>
-        console.error('Unexpected error during regeneration:', err),
-    });
+        error: (err) =>
+          console.error('Unexpected error during regeneration:', err),
+      });
   }
 
   resetOtpFields(): void {
@@ -62,9 +75,8 @@ export class OtpComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const allInputs = document.querySelectorAll('input');
-    const enteredOTP = Array.from(allInputs)
-      .map((i) => i.value)
+    const enteredOTP = this.otpControls
+      .map((key) => this.otpForm.get(key)?.value)
       .join('');
 
     this.isCheckingOTP.set(true);

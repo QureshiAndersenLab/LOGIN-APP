@@ -7,7 +7,6 @@ import {
   inject,
 } from '@angular/core';
 import { FormGroup, NgControl } from '@angular/forms';
-import { OTPService } from '@services';
 
 @Directive({
   selector: '[appOtpInput]',
@@ -18,7 +17,6 @@ export class OtpInputDirective {
   readonly #el = inject(ElementRef<HTMLInputElement>);
   readonly #renderer = inject(Renderer2);
   readonly #control = inject(NgControl);
-  readonly #OTPService = inject(OTPService);
 
   @HostListener('input')
   onInput(): void {
