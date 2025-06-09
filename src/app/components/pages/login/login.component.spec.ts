@@ -7,40 +7,47 @@ import {
 } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Location } from '@angular/common';
 import { of, throwError } from 'rxjs';
 import { LoginService, OTPService } from '@services';
-import { NavbarComponent, FooterComponent } from '../../layout';
 import { FocusDirective } from '@directives';
 import { By } from '@angular/platform-browser';
+import { provideRouter, Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let loginServiceSpy: jasmine.SpyObj<LoginService>;
   let otpServiceSpy: jasmine.SpyObj<OTPService>;
-  let locationSpy: jasmine.SpyObj<Location>;
+  let router: Router;
+  let navigateSpy: jasmine.Spy;
+
+  class DummyOtpComponent {}
+
+  const testRoutes = [{ path: 'otp', component: DummyOtpComponent }];
 
   beforeEach(async () => {
     loginServiceSpy = jasmine.createSpyObj('LoginService', ['getQuote']);
-    otpServiceSpy = jasmine.createSpyObj('OTPService', ['generateOtp']);
-    locationSpy = jasmine.createSpyObj('Location', ['back']);
+    otpServiceSpy = jasmine.createSpyObj('OTPService', [
+      'generateOtp',
+      'setOTP',
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
         FormsModule,
         LoginComponent,
-        NavbarComponent,
-        FooterComponent,
         FocusDirective,
       ],
       providers: [
         { provide: LoginService, useValue: loginServiceSpy },
         { provide: OTPService, useValue: otpServiceSpy },
-        { provide: Location, useValue: locationSpy },
+        provideRouter(testRoutes),
       ],
     }).compileComponents();
+
+    router = TestBed.inject(Router);
+    navigateSpy = spyOn(router, 'navigate');
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -49,24 +56,6 @@ describe('LoginComponent', () => {
 
   it('should create LoginComponent', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should render the Insurance Lady image with correct details', () => {
-    const navbar = fixture.nativeElement;
-    const logo = navbar.querySelector('[data-testId="insurance-lady-img"] img');
-    expect(logo).toBeTruthy();
-    expect(logo.getAttribute('src')).toContain('login');
-    expect(logo.getAttribute('alt')).toBe('Insurance Lady');
-  });
-
-  it('should render title and instructions', () => {
-    const instructions = fixture.debugElement.nativeElement.querySelector(
-      '[data-testId="insurance-lady-img"] h2'
-    );
-    expect(instructions.textContent).toContain('Welcome');
-
-    const logIn = fixture.debugElement.nativeElement.querySelector('form p');
-    expect(logIn.textContent).toContain('Log In');
   });
 
   it('should disable submit button when form is invalid and NOT call onSubmit', fakeAsync(() => {
@@ -117,12 +106,6 @@ describe('LoginComponent', () => {
     expect(button.disabled).toBeFalse();
   });
 
-  it('should call goBack() and trigger Location.back()', () => {
-    const backBtn = fixture.debugElement.query(By.css('button[type="button"]'));
-    backBtn.triggerEventHandler('click', null);
-    expect(locationSpy.back).toHaveBeenCalled();
-  });
-
   it('should call loginService.getQuote() and otpService.generateOtp() on valid submit', fakeAsync(() => {
     const testOtp = '123456';
 
@@ -143,7 +126,9 @@ describe('LoginComponent', () => {
 
     expect(loginServiceSpy.getQuote).toHaveBeenCalled();
     expect(otpServiceSpy.generateOtp).toHaveBeenCalled();
-    expect(component.OTPCode()).toBe(testOtp);
+    expect(navigateSpy).toHaveBeenCalledWith(['otp'], {
+      state: { email: 'valid@email.com' },
+    });
 
     flush();
   }));
