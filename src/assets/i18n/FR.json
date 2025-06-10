@@ -1,0 +1,44 @@
+{
+  "common": {
+    "back": "Retour",
+    "loading": "Chargement..."
+  },
+  "side": {
+    "welcome": "Bienvenue sur votre",
+    "InsurancePortal": "Portail d'assurance",
+    "InsurancePortalDesc": "Votre centre d'assurance complet – gérez vos polices, déclarez des sinistres et découvrez des solutions de couverture personnalisées en toute simplicité"
+  },
+  "layout": {
+    "footer": {
+      " helpCenter": "Centre d'aide",
+      "legalInformation": "Informations légales",
+      "privacyStatement": "Déclaration de confidentialité",
+      "cookiePolicy": "Politique de cookies"
+    }
+  },
+  "pages": {
+    "login": {
+      "loginTitle": "Connexion",
+      "loginDesc": "Veuillez saisir votre adresse e-mail associée à votre compte Deutsche Bank",
+      "emailAddress": "Adresse e-mail",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
+      "continue": "Continuer"
+    },
+    "otp": {
+      "otpTitle": "Vérification OTP",
+      "otpDesc": "Nous avons envoyé un code de vérification à 6 chiffres à votre adresse e-mail {{email}}. Veuillez entrer le code pour continuer.",
+      "newOTP": "Un nouveau code de vérification a été envoyé à votre e-mail.",
+      "otpExpired": "Votre code de vérification a expiré. Veuillez demander un nouveau code.",
+      "invalidOTP": "Code invalide. Veuillez réessayer.",
+      "submit": "Soumettre",
+      "resendCode": "Renvoyer le code",
+      "ifEmailUpdatedMsg": "Si vous vous êtes récemment inscrit ou avez mis à jour votre adresse e-mail dans l'application bancaire, le code peut ne pas être livré. Dans ce cas, veuillez patienter pendant la mise à jour de nos données.",
+      "needHelp": "Besoin d'aide ?",
+      "contact": "Contacter le support Allianz"
+    }
+  },
+  "messages": {
+    "welcomeUser": "Bienvenue, {{name}} !",
+    "itemsSelected": "Vous avez sélectionné {{count}} éléments"
+  }
+}

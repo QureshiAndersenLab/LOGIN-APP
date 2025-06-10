@@ -4,9 +4,11 @@
   class="flex flex-col gap-8 w-full max-w-md"
 >
   <div class="flex flex-col gap-3">
-    <p class="font-[550] text-[30px] leading-[40px] tracking-[0.3px]">Log In</p>
+    <p class="font-[550] text-[30px] leading-[40px] tracking-[0.3px]">
+      {{ "pages.login.loginTitle" | translate }}
+    </p>
     <p class="font-[400] text-4 leading-[24px] tracking-[0.3px]">
-      Please enter your email address assigned to your Deutsche Bank account
+      {{ "pages.login.loginDesc" | translate }}
     </p>
   </div>
 
@@ -15,7 +17,7 @@
       for="email"
       class="font-[400] text-4 leading-[24px] tracking-[0.2px]"
     >
-      Email Address
+      {{ "pages.login.emailAddress" | translate }}
     </label>
     <input
       focus
@@ -34,7 +36,7 @@
         src="../../../../assets/icons/invalid-error.png"
         alt="invalid error"
       />
-      <span> Please enter a valid email address.</span>
+      <span> {{ "pages.login.invalidEmail" | translate }} </span>
     </div>
     }
   </div>
@@ -43,6 +45,10 @@
     class="py-3 px-8 font-[550] text-4 leading-[24px] tracking-[0.2px] bg-brandBlue text-white rounded-sm disabled:bg-[#C2C2C2]"
     [disabled]="loginForm.invalid || isLoading()"
   >
-    {{ isLoading() ? "Loading..." : "Continue" }}
+    @if (isLoading()) {
+    {{ "common.loading" | translate }}
+    } @else {
+    {{ "pages.login.continue" | translate }}
+    }
   </button>
 </form>

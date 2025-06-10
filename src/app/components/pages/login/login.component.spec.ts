@@ -12,6 +12,8 @@ import { LoginService, OTPService } from '@services';
 import { FocusDirective } from '@directives';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { createMockTranslateServiceWithTranslations } from '@shared/utils';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -32,6 +34,11 @@ describe('LoginComponent', () => {
       'setOTP',
     ]);
 
+    const mockTranslateService = createMockTranslateServiceWithTranslations({
+      'common.loading': 'Loading...',
+      'pages.login.invalidEmail': 'Please enter a valid email address.',
+    });
+
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -42,6 +49,7 @@ describe('LoginComponent', () => {
       providers: [
         { provide: LoginService, useValue: loginServiceSpy },
         { provide: OTPService, useValue: otpServiceSpy },
+        { provide: TranslateService, useValue: mockTranslateService },
         provideRouter(testRoutes),
       ],
     }).compileComponents();
@@ -89,7 +97,9 @@ describe('LoginComponent', () => {
 
     const errorMsg = fixture.debugElement.query(By.css('.error-message'));
     expect(errorMsg).toBeTruthy();
-    expect(errorMsg.nativeElement.textContent).toContain('valid email address');
+    expect(errorMsg.nativeElement.textContent.trim()).toBe(
+      'Please enter a valid email address.'
+    );
   });
 
   it('should enable submit button when email is valid', () => {
@@ -159,6 +169,6 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
 
     const button = fixture.debugElement.query(By.css('button[type="submit"]'));
-    expect(button.nativeElement.textContent).toContain('Loading...');
+    expect(button.nativeElement.textContent.trim()).toContain('Loading...');
   });
 });

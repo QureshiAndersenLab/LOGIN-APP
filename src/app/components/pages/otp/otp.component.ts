@@ -11,13 +11,19 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OtpInputDirective } from '@directives';
+import { TranslateModule } from '@ngx-translate/core';
 import { OTPService } from '@services';
 import { OTP_LENGTH } from '@shared/constants';
 import { AppRoutes } from 'app/app.routes';
 
 @Component({
   selector: 'allianz-otp',
-  imports: [ReactiveFormsModule, CommonModule, OtpInputDirective],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    OtpInputDirective,
+    TranslateModule,
+  ],
   templateUrl: './otp.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -32,7 +38,7 @@ export class OtpComponent implements OnInit {
 
   readonly isOTPInvalid = this.#otpService.isOTPInvalid;
   readonly isExpired = this.#otpService.isExpired;
-  readonly errorMessage = this.#otpService.errorMessage;
+  readonly errMsgTranslationKey = this.#otpService.errMsgTranslationKey;
 
   ngOnInit(): void {
     if (!this.email || !this.#otpService.receivedOTP()) {

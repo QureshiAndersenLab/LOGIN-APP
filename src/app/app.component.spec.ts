@@ -2,10 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { KANYE_API_URL } from './app.config';
 import { By } from '@angular/platform-browser';
+import { createMockTranslateServiceWithTranslations } from '@shared/utils';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+
+  const mockTranslateService = createMockTranslateServiceWithTranslations({
+    'side.welcome': 'Welcome',
+    'side.InsurancePortalDesc':
+      'Your complete insurance hub – manage your policies, file claims, and discover customized coverage solutions with simplicity',
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,6 +23,7 @@ describe('AppComponent', () => {
           provide: KANYE_API_URL,
           useValue: 'https://mock.kanye.rest',
         },
+        { provide: TranslateService, useValue: mockTranslateService },
       ],
     }).compileComponents();
 

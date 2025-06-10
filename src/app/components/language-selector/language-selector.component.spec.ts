@@ -1,8 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { LanguageSelectorComponent } from '@components';
 import { DEFAULT_LANGUAGE } from '@shared/constants';
+import { MOCK_TRANSLATE_SERVICE_PROVIDER } from '@shared/utils';
 
 describe('LanguageSelectorComponent', () => {
   let component: LanguageSelectorComponent;
@@ -11,6 +17,7 @@ describe('LanguageSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LanguageSelectorComponent, CommonModule],
+      providers: [MOCK_TRANSLATE_SERVICE_PROVIDER],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LanguageSelectorComponent);
@@ -67,15 +74,25 @@ describe('LanguageSelectorComponent', () => {
     const listOfLanguages = fixture.debugElement.queryAll(
       By.css('[data-testId="lang-dropdown"] > li')
     );
-    expect(listOfLanguages.length).toBe(component.languages.length);
+    expect(listOfLanguages.length).toBe(component.availableLanguages().length);
 
-    const langTexts = listOfLanguages.map((listItem) =>
-      listItem.nativeElement.textContent.trim()
-    );
-    expect(langTexts).toEqual(component.languages);
+    const langCodeOption = fixture.debugElement
+      .queryAll(By.css('[data-testId="lang-code"]'))
+      .map((el) => el.nativeElement.textContent.trim());
+
+    const availLangCodes = component
+      .availableLanguages()
+      .map((lang) => lang.code);
+
+    expect(langCodeOption).toEqual(availLangCodes);
   });
 
-  it('should set selected language and close dropdown when a language is clicked', () => {
+  it('should set selected language and close dropdown when a language is clicked', fakeAsync(() => {
+    const selectLanguageSpy = spyOn(
+      component,
+      'selectLanguage'
+    ).and.callThrough();
+
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click', null);
     fixture.detectChanges();
@@ -83,18 +100,16 @@ describe('LanguageSelectorComponent', () => {
     const listOfLanguages = fixture.debugElement.queryAll(
       By.css('[data-testId="lang-dropdown"] > li')
     );
-    const secondLang = component.languages[1];
+
+    const secondLangCode = component.availableLanguages()[1].code;
 
     listOfLanguages[1].triggerEventHandler('click', null);
+    tick();
     fixture.detectChanges();
 
-    expect(component.selectedLanguage()).toBe(secondLang);
+    expect(selectLanguageSpy).toHaveBeenCalled();
+
+    expect(component.currentLanguage()).toBe(secondLangCode);
     expect(component.showDropdown()).toBeFalse();
-
-    const displayedLang = fixture.debugElement
-      .query(By.css('[data-testId="selected-lang"]'))
-      .nativeElement.textContent.trim();
-
-    expect(displayedLang).toBe(secondLang);
-  });
+  }));
 });

@@ -1,0 +1,44 @@
+{
+  "common": {
+    "back": "Zurück",
+    "loading": "Wird geladen..."
+  },
+  "side": {
+    "welcome": "Willkommen in Ihrem",
+    "InsurancePortal": "Versicherungsportal",
+    "InsurancePortalDesc": "Ihr komplettes Versicherungszentrum – verwalten Sie Ihre Policen, reichen Sie Schadensmeldungen ein und entdecken Sie individuelle Versicherungslösungen mit Leichtigkeit"
+  },
+  "layout": {
+    "footer": {
+      " helpCenter": "Hilfezentrum",
+      "legalInformation": "Rechtliche Informationen",
+      "privacyStatement": "Datenschutzerklärung",
+      "cookiePolicy": "Cookie-Richtlinie"
+    }
+  },
+  "pages": {
+    "login": {
+      "loginTitle": "Anmelden",
+      "loginDesc": "Bitte geben Sie Ihre mit Ihrem Deutsche Bank-Konto verknüpfte E-Mail-Adresse ein",
+      "emailAddress": "E-Mail-Adresse",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "continue": "Weiter"
+    },
+    "otp": {
+      "otpTitle": "OTP-Verifizierung",
+      "otpDesc": "Wir haben einen 6-stelligen Bestätigungscode an Ihre E-Mail-Adresse {{email}} gesendet. Bitte geben Sie den Code ein, um fortzufahren.",
+      "newOTP": "Ein neuer Bestätigungscode wurde an Ihre E-Mail gesendet.",
+      "otpExpired": "Ihr Bestätigungscode ist abgelaufen. Bitte fordern Sie einen neuen Code an.",
+      "invalidOTP": "Ungültiger Code. Bitte versuchen Sie es erneut.",
+      "submit": "Absenden",
+      "resendCode": "Code erneut senden",
+      "ifEmailUpdatedMsg": "Wenn Sie sich kürzlich registriert oder Ihre E-Mail-Adresse in der Bankanwendung aktualisiert haben, kann es sein, dass der Code nicht zugestellt wird. In diesem Fall bitten wir um etwas Geduld, während unsere Daten aktualisiert werden.",
+      "needHelp": "Brauchen Sie Hilfe?",
+      "contact": "Kontaktieren Sie den Allianz-Support"
+    }
+  },
+  "messages": {
+    "welcomeUser": "Willkommen, {{name}}!",
+    "itemsSelected": "Sie haben {{count}} Elemente ausgewählt"
+  }
+}

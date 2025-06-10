@@ -1,9 +1,8 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-
 import { OTPService } from './otp.service';
 import {
-  OTP_EXPIRED_ERROR_MSG,
-  OTP_INVALID_ERROR_MSG,
+  OTP_EXPIRED_ERROR_KEY,
+  OTP_INVALID_ERROR_KEY,
 } from '@shared/constants';
 
 describe('OTPService', () => {
@@ -41,7 +40,7 @@ describe('OTPService', () => {
     tick(1000);
 
     expect(service.isOTPInvalid()).toBe(false);
-    expect(service.errorMessage()).toBe('');
+    expect(service.errMsgTranslationKey()).toBe('');
   }));
 
   it('should return false and set error for wrong OTP', fakeAsync(() => {
@@ -51,7 +50,7 @@ describe('OTPService', () => {
     service.validateOTP('000000').subscribe((isValid) => {
       expect(isValid).toBe(false);
       expect(service.isOTPInvalid()).toBe(true);
-      expect(service.errorMessage()).toBe(OTP_INVALID_ERROR_MSG);
+      expect(service.errMsgTranslationKey()).toBe(OTP_INVALID_ERROR_KEY);
     });
     tick(1000);
   }));
@@ -62,20 +61,20 @@ describe('OTPService', () => {
     service.validateOTP('111111').subscribe((isValid) => {
       expect(isValid).toBe(false);
       expect(service.isOTPInvalid()).toBe(true);
-      expect(service.errorMessage()).toBe(OTP_EXPIRED_ERROR_MSG);
+      expect(service.errMsgTranslationKey()).toBe(OTP_EXPIRED_ERROR_KEY);
     });
     tick(1000);
   }));
 
   it('should reset the state', () => {
     service.setOTP('999999');
-    service.errorMessage.set('some error');
+    service.errMsgTranslationKey.set('some error');
     service.isOTPInvalid.set(true);
 
     service.reset();
 
     expect(service.receivedOTP()).toBe('');
     expect(service.isOTPInvalid()).toBe(false);
-    expect(service.errorMessage()).toBe('');
+    expect(service.errMsgTranslationKey()).toBe('');
   });
 });

@@ -8,14 +8,12 @@
       <h2
         class="text-[20px] md:text-[30px] font-[550] leading-[40px] tracking-[0.3px]"
       >
-        OTP Verification
+        {{ "pages.otp.otpTitle" | translate }}
       </h2>
       <p
         class="text-xs md:text-[16px] font-normal leading-[24px] tracking-[0.3px]"
       >
-        We've sent a 6-digit verification code to your email address
-        <span class="font-bold">{{ email }}</span
-        >. Please enter the code to continue.
+        {{ "pages.otp.otpDesc" | translate : { email } }}
       </p>
     </div>
 
@@ -25,7 +23,7 @@
       <span
         class="text-xs md:text-[16px] font-normal leading-[24px] tracking-[0.2px]"
       >
-        New verification code has been sent to your email.
+        {{ "pages.otp.newOTP" | translate : { email } }}
       </span>
     </div>
     }
@@ -54,7 +52,7 @@
         src="../../../../assets/icons/invalid-error.png"
         alt="invalid error"
       />
-      <span>{{ errorMessage() }}</span>
+      <span>{{ errMsgTranslationKey() | translate }}</span>
     </div>
     }
 
@@ -64,14 +62,14 @@
         class="py-3 px-8 font-[550] text-sm md:text-[16px] leading-[16px] md:leading-[24px] tracking-[0.2px] bg-brandBlue text-white rounded-sm disabled:bg-[#C2C2C2]"
         [disabled]="otpForm.invalid || isExpired()"
       >
-        Submit
+        {{ "pages.otp.submit" | translate }}
       </button>
       <button
         type="button"
         (click)="resendOTP()"
         class="text-[12px] md:text-[16px] text-brandBlue font-[550] leading-[24px] tracking-[0.2px]"
       >
-        Resend Code
+        {{ "pages.otp.resendCode" | translate }}
       </button>
     </div>
   </div>
@@ -86,21 +84,20 @@
       <p
         class="text-xs sm:text-[16px] font-normal leading-[24px] tracking-[0.2px]"
       >
-        If you have recently signed up or updated your email address in the bank
-        application, the code might not be delivered. In this case, please allow
-        some time for our records to update.
+        {{ "pages.otp.ifEmailUpdatedMsg" | translate }}
       </p>
     </div>
     <div class="flex justify-center items-center gap-2">
       <p
         class="text-xs sm:text-[16px] font-normal leading-[24px] tracking-[0.3px]"
       >
-        Need help?
+        {{ "pages.otp.needHelp" | translate }}
       </p>
       <a
         href="#"
         class="text-xs sm:text-[16px] font-[550] leading-[24px] tracking-[0.2px]"
-        >Contact Allianz Support</a
+      >
+        {{ "pages.otp.contact" | translate }}</a
       >
     </div>
   </div>

@@ -1,0 +1,44 @@
+{
+  "common": {
+    "back": "Back",
+    "loading": "Loading..."
+  },
+  "side": {
+    "welcome": "Welcome to your",
+    "InsurancePortal": "Insurance portal",
+    "InsurancePortalDesc": "Your complete insurance hub – manage your policies, file claims, and discover customized coverage solutions with simplicity"
+  },
+  "layout": {
+    "footer": {
+      " helpCenter": "Help Center",
+      "legalInformation": "Legal information",
+      "privacyStatement": "Privacy statement",
+      "cookiePolicy": "Cookie policy"
+    }
+  },
+  "pages": {
+    "login": {
+      "loginTitle": "Log In",
+      "loginDesc": "Please enter your email address assigned to your Deutsche Bank account",
+      "emailAddress": "Email Address",
+      "invalidEmail": "Please enter a valid email address.",
+      "continue": "Continue"
+    },
+    "otp": {
+      "otpTitle": "OTP Verification",
+      "otpDesc": " We've sent a 6-digit verification code to your email address {{email}}. Please enter the code to continue.",
+      "newOTP": "New verification code has been sent to your email.",
+      "otpExpired": "Your verification code has expired. Please request a new code.",
+      "invalidOTP": "Invalid code. Please try again.",
+      "submit": "Submit",
+      "resendCode": "Resent Code",
+      "ifEmailUpdatedMsg": "If you have recently signed up or updated your email address in the bank application, the code might not be delivered. In this case, please allow some time for our records to update.",
+      "needHelp": "Need Help?",
+      "contact": "Contact Allianz Support"
+    }
+  },
+  "messages": {
+    "welcomeUser": "Welcome, {{name}}!",
+    "itemsSelected": "You have selected {{count}} items"
+  }
+}
