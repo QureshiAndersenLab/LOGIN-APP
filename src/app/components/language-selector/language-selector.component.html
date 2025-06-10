@@ -15,7 +15,7 @@
       />
     </svg>
 
-    <span data-testId="selected-lang"> {{ selectedLanguage() }} </span>
+    <span data-testId="selected-lang"> {{ currentLanguage() }} </span>
 
     <svg
       width="16"
@@ -38,12 +38,37 @@
     data-testId="lang-dropdown"
     class="absolute right-0 mt-2 w-20 sm:w-24 bg-white border border-gray-200 rounded shadow-md z-50"
   >
-    @for (lang of languages; track lang) {
+    @for (lang of availableLanguages(); track trackByLanguage($index, lang)) {
     <li
-      (click)="selectLanguage(lang)"
-      class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-xs sm:text-sm"
+      (click)="selectLanguage(lang.code)"
+      class="flex gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-xs sm:text-sm"
     >
-      {{ lang }}
+      <div>
+        <span
+          class="w-4 h-4 rounded-sm bg-gray-200 flex items-center justify-center text-xs font-bold mr-3"
+        >
+          {{ lang.code }}
+        </span>
+
+        <div class="flex flex-col">
+          <span class="font-medium">{{ lang.nativeName }}</span>
+          <span class="text-xs text-gray-500">{{ lang.name }}</span>
+        </div>
+      </div>
+
+      @if (currentLanguage() === lang.code) {
+      <svg
+        class="w-4 h-4 ml-auto text-indigo-600"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      }
     </li>
     }
   </ul>

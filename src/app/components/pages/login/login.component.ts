@@ -13,10 +13,11 @@ import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'app/app.routes';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'allianz-login',
-  imports: [ReactiveFormsModule, FocusDirective, CommonModule],
+  imports: [ReactiveFormsModule, FocusDirective, CommonModule, TranslateModule],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -11,10 +11,17 @@ import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { AppRoutes } from './app.routes';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, startWith } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, CommonModule, FooterComponent, NavbarComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FooterComponent,
+    NavbarComponent,
+    TranslateModule,
+  ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

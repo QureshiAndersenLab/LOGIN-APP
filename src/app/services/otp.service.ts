@@ -1,8 +1,8 @@
 import { computed, Injectable, OnDestroy, signal } from '@angular/core';
 import {
-  OTP_EXPIRED_ERROR_MSG,
+  OTP_EXPIRED_ERROR_KEY,
   OTP_EXPIRY_SEC,
-  OTP_INVALID_ERROR_MSG,
+  OTP_INVALID_ERROR_KEY,
 } from '@shared/constants';
 import {
   delay,
@@ -50,7 +50,7 @@ export class OTPService implements OnDestroy {
 
         if (time <= 0) {
           this.isOTPInvalid.set(true);
-          this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
+          this.errorMessage.set(OTP_EXPIRED_ERROR_KEY);
         }
       }),
       takeUntil(this.stop$)
@@ -62,7 +62,7 @@ export class OTPService implements OnDestroy {
       return of(false).pipe(
         tap(() => {
           this.isOTPInvalid.set(true);
-          this.errorMessage.set(OTP_EXPIRED_ERROR_MSG);
+          this.errorMessage.set(OTP_EXPIRED_ERROR_KEY);
         }),
         delay(1000)
       );
@@ -73,7 +73,7 @@ export class OTPService implements OnDestroy {
     return of(isValid).pipe(
       tap((isValid) => {
         this.isOTPInvalid.set(!isValid);
-        this.errorMessage.set(isValid ? '' : OTP_INVALID_ERROR_MSG);
+        this.errorMessage.set(isValid ? '' : OTP_INVALID_ERROR_KEY);
       }),
       delay(1000)
     );
