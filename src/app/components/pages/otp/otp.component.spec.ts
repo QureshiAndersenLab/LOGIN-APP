@@ -11,9 +11,11 @@ import { Router } from '@angular/router';
 import { OTPService } from '@services';
 import { AppRoutes } from 'app/app.routes';
 import {
-  OTP_EXPIRED_ERROR_MSG,
-  OTP_INVALID_ERROR_MSG,
+  OTP_EXPIRED_ERROR_KEY,
+  OTP_INVALID_ERROR_KEY,
 } from '@shared/constants';
+import { createMockTranslateServiceWithTranslations } from '@shared/utils';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('OtpComponent', () => {
   let component: OtpComponent;
@@ -23,9 +25,16 @@ describe('OtpComponent', () => {
   let router: Router;
   let navigateSpy: jasmine.Spy;
 
+  const mockTranslateService = createMockTranslateServiceWithTranslations({
+    'pages.otp.otpTitle': 'OTP Verification',
+  });
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [OtpComponent],
+      providers: [
+        { provide: TranslateService, useValue: mockTranslateService },
+      ],
     }).compileComponents();
 
     otpService = TestBed.inject(OTPService);
@@ -152,7 +161,7 @@ describe('OtpComponent', () => {
     expect(errorDiv).toBeTruthy();
 
     const errorSpan = errorDiv.query(By.css('span')).nativeElement;
-    expect(errorSpan.textContent).toBe(OTP_INVALID_ERROR_MSG);
+    expect(errorSpan.textContent).toBe(OTP_INVALID_ERROR_KEY);
   }));
 
   it('should mark OTP as expired after 10 sec and show expired error in the UI', fakeAsync(() => {
@@ -160,19 +169,19 @@ describe('OtpComponent', () => {
 
     tick(9999);
     expect(otpService.isExpired()).toBeFalse();
-    expect(otpService.errorMessage()).toBe('');
+    expect(otpService.errMsgTranslationKey()).toBe('');
 
     tick(1);
     fixture.detectChanges();
 
     expect(otpService.isExpired()).toBeTrue();
     expect(otpService.isOTPInvalid()).toBeTrue();
-    expect(otpService.errorMessage()).toBe(OTP_EXPIRED_ERROR_MSG);
+    expect(otpService.errMsgTranslationKey()).toBe(OTP_EXPIRED_ERROR_KEY);
 
     const errorDiv = fixture.debugElement.query(By.css('.error-message'));
     expect(errorDiv).toBeTruthy();
 
     const errorSpan = errorDiv.query(By.css('span')).nativeElement;
-    expect(errorSpan.textContent).toBe(OTP_EXPIRED_ERROR_MSG);
+    expect(errorSpan.textContent).toBe(OTP_EXPIRED_ERROR_KEY);
   }));
 });

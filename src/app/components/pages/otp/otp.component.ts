@@ -38,7 +38,7 @@ export class OtpComponent implements OnInit {
 
   readonly isOTPInvalid = this.#otpService.isOTPInvalid;
   readonly isExpired = this.#otpService.isExpired;
-  readonly errorMessage = this.#otpService.errorMessage;
+  readonly errMsgTranslationKey = this.#otpService.errMsgTranslationKey;
 
   ngOnInit(): void {
     if (!this.email || !this.#otpService.receivedOTP()) {

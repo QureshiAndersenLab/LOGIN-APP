@@ -19,7 +19,7 @@ import {
 export class OTPService implements OnDestroy {
   readonly receivedOTP = signal<string | null>(null);
   readonly isOTPInvalid = signal<boolean>(false);
-  readonly errorMessage = signal<string>('');
+  readonly errMsgTranslationKey = signal<string>('');
   readonly otpExpiryTimer = signal<number>(OTP_EXPIRY_SEC);
   readonly isExpired = computed(() => this.otpExpiryTimer() <= 0);
 
@@ -50,7 +50,7 @@ export class OTPService implements OnDestroy {
 
         if (time <= 0) {
           this.isOTPInvalid.set(true);
-          this.errorMessage.set(OTP_EXPIRED_ERROR_KEY);
+          this.errMsgTranslationKey.set(OTP_EXPIRED_ERROR_KEY);
         }
       }),
       takeUntil(this.stop$)
@@ -62,7 +62,7 @@ export class OTPService implements OnDestroy {
       return of(false).pipe(
         tap(() => {
           this.isOTPInvalid.set(true);
-          this.errorMessage.set(OTP_EXPIRED_ERROR_KEY);
+          this.errMsgTranslationKey.set(OTP_EXPIRED_ERROR_KEY);
         }),
         delay(1000)
       );
@@ -73,7 +73,7 @@ export class OTPService implements OnDestroy {
     return of(isValid).pipe(
       tap((isValid) => {
         this.isOTPInvalid.set(!isValid);
-        this.errorMessage.set(isValid ? '' : OTP_INVALID_ERROR_KEY);
+        this.errMsgTranslationKey.set(isValid ? '' : OTP_INVALID_ERROR_KEY);
       }),
       delay(1000)
     );
@@ -82,7 +82,7 @@ export class OTPService implements OnDestroy {
   reset(): void {
     this.receivedOTP.set('');
     this.isOTPInvalid.set(false);
-    this.errorMessage.set('');
+    this.errMsgTranslationKey.set('');
   }
 
   ngOnDestroy(): void {
