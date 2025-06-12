@@ -35,6 +35,14 @@
       "ifEmailUpdatedMsg": "Wenn Sie sich kürzlich registriert oder Ihre E-Mail-Adresse in der Bankanwendung aktualisiert haben, kann es sein, dass der Code nicht zugestellt wird. In diesem Fall bitten wir um etwas Geduld, während unsere Daten aktualisiert werden.",
       "needHelp": "Brauchen Sie Hilfe?",
       "contact": "Kontaktieren Sie den Allianz-Support"
+    },
+    "dashboard": {
+      "welcome": "Willkommen bei Allianz!",
+      "commonPrice": "Gemeinsamer Preis",
+      "addMember": "Mitglied hinzufügen",
+      "dob": "Geburtsdatum",
+      "dobFormat": "MM/TT/JJJJ",
+      "amount": "Betrag"
     }
   },
   "messages": {

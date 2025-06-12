@@ -1,0 +1,64 @@
+<div
+  class="p-6 bg-white shadow rounded text-xs sm:text-[15px] w-full sm:min-w-[450px]"
+>
+  <form [formGroup]="familyForm">
+    <div
+      formArrayName="members"
+      class="h-[350px] sm:max-h-[450px] overflow-scroll"
+    >
+      @for(member of members.controls; track member.value.id; let i = $index){
+      <div
+        [formGroupName]="i"
+        class="flex gap-4 justify-center items-center border-b pb-2 mb-2 lg:mb-4"
+      >
+        <mat-form-field floatLabel="always" class="w-[160px]">
+          <mat-label>{{ "pages.dashboard.dob" | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dob"
+            placeholder="{{ 'pages.dashboard.dobFormat' | translate }}"
+            (dateChange)="calculateTotal()"
+          />
+          <mat-datepicker #picker />
+          <mat-datepicker-toggle matSuffix [for]="picker" />
+        </mat-form-field>
+
+        <mat-form-field floatLabel="always" class="w-[120px]">
+          <mat-label>{{ "pages.dashboard.amount" | translate }}</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="amount"
+            placeholder="0"
+            (input)="calculateTotal()"
+          />
+          <span matTextPrefix>$&nbsp;</span>
+        </mat-form-field>
+
+        @if(members.length > 1){
+        <button
+          (click)="removeMember(i)"
+          class="text-red-600 rounded-lg hover:text-red-700"
+        >
+          <mat-icon fontIcon="delete_forever" />
+        </button>
+        }
+      </div>
+      }
+    </div>
+
+    <button
+      (click)="addMember()"
+      class="my-5 flex gap-1 items-center p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+    >
+      <span>{{ "pages.dashboard.addMember" | translate }}</span>
+      <mat-icon fontIcon="person_add" />
+    </button>
+  </form>
+
+  <div class="text-lg sm:text-xl text-brandBlue text-center font-semibold mt-8">
+    {{ "pages.dashboard.commonPrice" | translate }}:
+    {{ totalPrice.toFixed(2) }}
+  </div>
+</div>

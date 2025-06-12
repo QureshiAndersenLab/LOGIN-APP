@@ -1,26 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { FamilyformComponent } from './familyform.component';
 import { createMockTranslateServiceWithTranslations } from '@shared/utils';
 import { TranslateService } from '@ngx-translate/core';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('FamilyformComponent', () => {
+  let component: FamilyformComponent;
+  let fixture: ComponentFixture<FamilyformComponent>;
 
   const mockTranslateService = createMockTranslateServiceWithTranslations({
-    'pages.dashboard.welcome': 'Loading...',
+    'common.loading': 'Loading...',
+    'pages.login.invalidEmail': 'Please enter a valid email address.',
   });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent],
+      imports: [FamilyformComponent],
       providers: [
         { provide: TranslateService, useValue: mockTranslateService },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(FamilyformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

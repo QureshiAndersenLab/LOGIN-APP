@@ -1,0 +1,1 @@
+export { FamilyformComponent } from './familyform';

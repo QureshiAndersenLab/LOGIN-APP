@@ -35,6 +35,14 @@
       "ifEmailUpdatedMsg": "Si vous vous êtes récemment inscrit ou avez mis à jour votre adresse e-mail dans l'application bancaire, le code peut ne pas être livré. Dans ce cas, veuillez patienter pendant la mise à jour de nos données.",
       "needHelp": "Besoin d'aide ?",
       "contact": "Contacter le support Allianz"
+    },
+    "dashboard": {
+      "welcome": "Bienvenue chez Allianz !",
+      "commonPrice": "Prix commun",
+      "addMember": "Ajouter un membre",
+      "dob": "Date de naissance",
+      "dobFormat": "MM/JJ/AAAA",
+      "amount": "Montant"
     }
   },
   "messages": {
