@@ -8,6 +8,7 @@
     >
       @for(member of members.controls; track member.value.id; let i = $index){
       <div
+        data-testId="member-div"
         [formGroupName]="i"
         class="flex gap-4 justify-center items-center border-b pb-2 mb-2 lg:mb-4"
       >
@@ -18,7 +19,6 @@
             [matDatepicker]="picker"
             formControlName="dob"
             placeholder="{{ 'pages.dashboard.dobFormat' | translate }}"
-            (dateChange)="calculateTotal()"
           />
           <mat-datepicker #picker />
           <mat-datepicker-toggle matSuffix [for]="picker" />
@@ -31,13 +31,13 @@
             type="number"
             formControlName="amount"
             placeholder="0"
-            (input)="calculateTotal()"
           />
           <span matTextPrefix>$&nbsp;</span>
         </mat-form-field>
 
         @if(members.length > 1){
         <button
+          data-testId="remove-member-btn"
           (click)="removeMember(i)"
           class="text-red-600 rounded-lg hover:text-red-700"
         >
@@ -49,6 +49,7 @@
     </div>
 
     <button
+      data-testId="add-member-btn"
       (click)="addMember()"
       class="my-5 flex gap-1 items-center p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
     >

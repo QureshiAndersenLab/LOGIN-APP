@@ -9,7 +9,7 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
 
   const mockTranslateService = createMockTranslateServiceWithTranslations({
-    'pages.dashboard.welcome': 'Loading...',
+    'pages.dashboard.welcome': 'Welcome to Allianz!',
   });
 
   beforeEach(async () => {
@@ -27,5 +27,10 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display welcome text', () => {
+    const welcomeTxt = fixture.nativeElement.querySelector('p').textContent;
+    expect(welcomeTxt).toBe('Welcome to Allianz!');
   });
 });
