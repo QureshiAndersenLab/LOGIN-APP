@@ -19,6 +19,7 @@
             [matDatepicker]="picker"
             formControlName="dob"
             placeholder="{{ 'pages.dashboard.dobFormat' | translate }}"
+            (dateChange)="calculateTotal()"
           />
           <mat-datepicker #picker />
           <mat-datepicker-toggle matSuffix [for]="picker" />
@@ -31,6 +32,7 @@
             type="number"
             formControlName="amount"
             placeholder="0"
+            (input)="calculateTotal()"
           />
           <span matTextPrefix>$&nbsp;</span>
         </mat-form-field>
