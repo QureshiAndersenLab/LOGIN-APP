@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { I18nService } from '../../services/i18n.service';
 import { Language } from '@shared/constants';
 import { LanguageInfo } from '@shared/models/language.model';
+import { I18nService } from '@services';
 
 @Component({
   selector: 'app-language-selector',
