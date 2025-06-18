@@ -1,11 +1,12 @@
 import { Injectable, inject, signal, computed, Signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT } from '@angular/common';
-import { DEFAULT_LANGUAGE, Language } from '@shared/constants';
 import {
+  DEFAULT_LANGUAGE,
+  Language,
   LANGUAGE_CONFIG,
-  STORAGE_KEY,
-} from '@shared/constants/language.constants';
+  APP_LANG_KEY,
+} from '@shared/constants';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -53,7 +54,7 @@ export class I18nService {
 
   private getStoredLanguage(): string | null {
     try {
-      return localStorage.getItem(STORAGE_KEY);
+      return localStorage.getItem(APP_LANG_KEY);
     } catch {
       return null;
     }
@@ -73,7 +74,7 @@ export class I18nService {
 
   private persistLanguage(language: Language): void {
     try {
-      localStorage.setItem(STORAGE_KEY, language);
+      localStorage.setItem(APP_LANG_KEY, language);
     } catch (error) {
       console.warn('Failed to persist language preference:', error);
     }

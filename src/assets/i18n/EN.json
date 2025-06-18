@@ -10,10 +10,13 @@
   },
   "layout": {
     "footer": {
-      " helpCenter": "Help Center",
+      "helpCenter": "Help Center",
       "legalInformation": "Legal information",
       "privacyStatement": "Privacy statement",
       "cookiePolicy": "Cookie policy"
+    },
+    "navbar": {
+      "logout": "Logout"
     }
   },
   "pages": {

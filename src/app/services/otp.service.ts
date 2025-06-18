@@ -57,9 +57,11 @@ export class OTPService implements OnDestroy {
     );
   }
 
-  validateOTP(value: string): Observable<boolean> {
+  validateOTP(
+    value: string
+  ): Observable<{ isValid: boolean; accessToken: string }> {
     if (this.isExpired()) {
-      return of(false).pipe(
+      return of({ isValid: false, accessToken: '' }).pipe(
         tap(() => {
           this.isOTPInvalid.set(true);
           this.errMsgTranslationKey.set(OTP_EXPIRED_ERROR_KEY);
@@ -70,8 +72,8 @@ export class OTPService implements OnDestroy {
 
     const isValid = value === this.receivedOTP();
 
-    return of(isValid).pipe(
-      tap((isValid) => {
+    return of({ isValid, accessToken: 'fake-auth-key-789' }).pipe(
+      tap(({ isValid }) => {
         this.isOTPInvalid.set(!isValid);
         this.errMsgTranslationKey.set(isValid ? '' : OTP_INVALID_ERROR_KEY);
       }),

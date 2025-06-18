@@ -25,5 +25,3 @@ export const LANGUAGE_CONFIG: Record<Language, LanguageInfo> = {
     nativeName: 'Deutsch',
   },
 };
-
-export const STORAGE_KEY = 'app-language';
