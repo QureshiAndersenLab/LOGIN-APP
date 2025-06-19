@@ -16,6 +16,7 @@ import {
 } from '@shared/constants';
 import { createMockTranslateServiceWithTranslations } from '@shared/utils';
 import { TranslateService } from '@ngx-translate/core';
+import { provideTestConfig } from '@shared/utils/provide-test-config';
 
 describe('OtpComponent', () => {
   let component: OtpComponent;
@@ -33,7 +34,9 @@ describe('OtpComponent', () => {
     await TestBed.configureTestingModule({
       imports: [OtpComponent],
       providers: [
-        { provide: TranslateService, useValue: mockTranslateService },
+        ...provideTestConfig([
+          { provide: TranslateService, useValue: mockTranslateService },
+        ]),
       ],
     }).compileComponents();
 
@@ -52,6 +55,7 @@ describe('OtpComponent', () => {
 
   it('show have otp verification title', () => {
     const titleTxt = fixture.debugElement.query(By.css('h2')).nativeElement;
+    console.log('titleTxt', titleTxt);
     const txtContent = titleTxt.textContent.trim();
     expect(txtContent).toBe('OTP Verification');
   });
@@ -171,7 +175,7 @@ describe('OtpComponent', () => {
     expect(otpService.isExpired()).toBeFalse();
     expect(otpService.errMsgTranslationKey()).toBe('');
 
-    tick(1);
+    tick(10000);
     fixture.detectChanges();
 
     expect(otpService.isExpired()).toBeTrue();

@@ -4,6 +4,7 @@ import { KANYE_API_URL } from './app.config';
 import { By } from '@angular/platform-browser';
 import { createMockTranslateServiceWithTranslations } from '@shared/utils';
 import { TranslateService } from '@ngx-translate/core';
+import { provideTestConfig } from '@shared/utils/provide-test-config';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -19,11 +20,9 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        {
-          provide: KANYE_API_URL,
-          useValue: 'https://mock.kanye.rest',
-        },
-        { provide: TranslateService, useValue: mockTranslateService },
+        ...provideTestConfig([
+          { provide: TranslateService, useValue: mockTranslateService },
+        ]),
       ],
     }).compileComponents();
 
