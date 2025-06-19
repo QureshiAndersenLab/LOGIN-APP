@@ -1,4 +1,10 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,6 +39,7 @@ interface IFamilyMember {
     MatIconModule,
     TranslateModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FamilyformComponent implements OnInit {
   readonly #fb = inject(FormBuilder);

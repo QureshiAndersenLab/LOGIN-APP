@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { OTPService } from '@services';
+import { LoginService } from '@services';
 
 export const loginGuard: CanActivateFn = () => {
-  const otpService = inject(OTPService);
+  const loginService = inject(LoginService);
 
-  return !!(otpService.receivedOTP() && !otpService.isOTPInvalid());
+  return loginService.isLoggedIn;
 };

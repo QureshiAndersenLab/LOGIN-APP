@@ -47,7 +47,7 @@ describe('OTPService', () => {
     const testOTP = '654321';
     service.setOTP(testOTP);
 
-    service.validateOTP('000000').subscribe((isValid) => {
+    service.validateOTP('000000').subscribe(({ isValid }) => {
       expect(isValid).toBe(false);
       expect(service.isOTPInvalid()).toBe(true);
       expect(service.errMsgTranslationKey()).toBe(OTP_INVALID_ERROR_KEY);
@@ -58,7 +58,7 @@ describe('OTPService', () => {
   it('should handle OTP expiry and return false', fakeAsync(() => {
     service.setOTP('111111');
     service.otpExpiryTimer.set(0);
-    service.validateOTP('111111').subscribe((isValid) => {
+    service.validateOTP('111111').subscribe(({ isValid }) => {
       expect(isValid).toBe(false);
       expect(service.isOTPInvalid()).toBe(true);
       expect(service.errMsgTranslationKey()).toBe(OTP_EXPIRED_ERROR_KEY);

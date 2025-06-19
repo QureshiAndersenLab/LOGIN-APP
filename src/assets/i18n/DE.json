@@ -14,6 +14,9 @@
       "legalInformation": "Rechtliche Informationen",
       "privacyStatement": "Datenschutzerklärung",
       "cookiePolicy": "Cookie-Richtlinie"
+    },
+    "navbar": {
+      "logout": "Abmelden"
     }
   },
   "pages": {

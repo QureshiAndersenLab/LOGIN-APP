@@ -7,6 +7,7 @@ import {
 import { FamilyformComponent } from './familyform.component';
 import { MOCK_TRANSLATE_SERVICE_PROVIDER } from '@shared/utils';
 import { By } from '@angular/platform-browser';
+import { provideTestConfig } from '@shared/utils/provide-test-config';
 
 describe('FamilyformComponent', () => {
   let component: FamilyformComponent;
@@ -15,7 +16,7 @@ describe('FamilyformComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FamilyformComponent],
-      providers: [MOCK_TRANSLATE_SERVICE_PROVIDER],
+      providers: [...provideTestConfig([MOCK_TRANSLATE_SERVICE_PROVIDER])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FamilyformComponent);
@@ -51,7 +52,7 @@ describe('FamilyformComponent', () => {
     expect(deleteButton).toBeNull();
   });
 
-  it('should remove a member form group on clicking delete', () => {
+  it('should remove a member form group on clicking delete', fakeAsync(() => {
     const addMemberSpy = spyOn(component, 'addMember').and.callThrough();
     const removeMemberSpy = spyOn(component, 'removeMember').and.callThrough();
 
@@ -64,6 +65,7 @@ describe('FamilyformComponent', () => {
     const memberInputs1 = fixture.debugElement.queryAll(
       By.css('[data-testId="member-div"]')
     );
+    tick(300);
 
     expect(addMemberSpy).toHaveBeenCalled();
     expect(memberInputs1.length).toBe(2);
@@ -82,7 +84,7 @@ describe('FamilyformComponent', () => {
       By.css('[data-testId="member-div"]')
     );
     expect(memberInputs2.length).toBe(1);
-  });
+  }));
 
   it('should display the correct calculated total price', fakeAsync(() => {
     const calculateTotalSpy = spyOn(

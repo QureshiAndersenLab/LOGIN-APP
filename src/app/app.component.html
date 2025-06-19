@@ -28,12 +28,14 @@
   </div>
 
   <div class="bg-white w-full md:w-1/2 px-8 pt-4 md:pt-8 pb-7 md:pb-14">
+    @if(!(isLoggedIn$ | async)){
     <div class="flex items-center justify-start gap-2 text-brandBlue">
       <img src="../../../../assets/icons/back-arrow.png" alt="back-arrow" />
       <button type="button" (click)="goBack()">
         {{ "common.back" | translate }}
       </button>
     </div>
+    }
 
     <div class="flex flex-col justify-center items-center h-full max-md:pt-10">
       <router-outlet />

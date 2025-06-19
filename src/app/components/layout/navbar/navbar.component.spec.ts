@@ -2,15 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LanguageSelectorComponent, NavbarComponent } from '@components';
 import { DEFAULT_LANGUAGE } from '@shared/constants';
 import { MOCK_TRANSLATE_SERVICE_PROVIDER } from '@shared/utils';
+import { provideTestConfig } from '@shared/utils/provide-test-config';
+import { KANYE_API_URL } from 'app/app.config';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
+  const mockUrl = 'https://mock.kanye.rest';
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NavbarComponent, LanguageSelectorComponent],
-      providers: [MOCK_TRANSLATE_SERVICE_PROVIDER],
+      providers: [...provideTestConfig([MOCK_TRANSLATE_SERVICE_PROVIDER])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);

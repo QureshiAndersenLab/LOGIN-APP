@@ -12,9 +12,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OtpInputDirective } from '@directives';
 import { TranslateModule } from '@ngx-translate/core';
-import { OTPService } from '@services';
-import { OTP_LENGTH } from '@shared/constants';
+import { LoginService, OTPService } from '@services';
+import {
+  AUTH_TOKEN_KEY,
+  LOGIN_EXPIRY_TIME_KEY,
+  OTP_LENGTH,
+} from '@shared/constants';
 import { AppRoutes } from 'app/app.routes';
+import { TimerService } from 'app/services/timer.service';
 
 @Component({
   selector: 'allianz-otp',
@@ -31,6 +36,7 @@ export class OtpComponent implements OnInit {
   readonly #formBuilder: FormBuilder = inject(FormBuilder);
   readonly #router = inject(Router);
   readonly #otpService = inject(OTPService);
+  readonly #loginService = inject(LoginService);
   readonly #destroyRef = inject(DestroyRef);
   readonly newOTPRequested = signal<boolean>(false);
   readonly email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
@@ -39,6 +45,8 @@ export class OtpComponent implements OnInit {
   readonly isOTPInvalid = this.#otpService.isOTPInvalid;
   readonly isExpired = this.#otpService.isExpired;
   readonly errMsgTranslationKey = this.#otpService.errMsgTranslationKey;
+
+  readonly #timerService = inject(TimerService);
 
   ngOnInit(): void {
     if (!this.email || !this.#otpService.receivedOTP()) {
@@ -86,9 +94,15 @@ export class OtpComponent implements OnInit {
       .join('');
 
     this.isCheckingOTP.set(true);
-    this.#otpService.validateOTP(enteredOTP).subscribe((isValid) => {
-      this.isCheckingOTP.set(false);
-      if (isValid) this.#router.navigate([AppRoutes.Dashboard]);
-    });
+    this.#otpService
+      .validateOTP(enteredOTP)
+      .subscribe(({ isValid, accessToken }) => {
+        this.isCheckingOTP.set(false);
+        if (isValid) {
+          this.#loginService.login();
+          this.#timerService.startLogoutTimer().subscribe();
+          this.#router.navigate([AppRoutes.Dashboard]);
+        }
+      });
   }
 }
