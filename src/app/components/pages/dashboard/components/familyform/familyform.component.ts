@@ -83,6 +83,7 @@ export class FamilyformComponent implements OnInit {
 
   removeMember(index: number): void {
     this.members.removeAt(index);
+    this.calculateTotal();
   }
 
   private createMemberGroup(member?: IFamilyMember): FormGroup {
