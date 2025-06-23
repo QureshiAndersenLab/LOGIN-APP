@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     const expiryTime = localStorage.getItem(LOGIN_EXPIRY_TIME_KEY);
 
     if (expiryTime) {
-      this.#timerService.startLogoutTimer().subscribe();
+      this.#timerService.startLogoutTimer();
     }
   }
 }

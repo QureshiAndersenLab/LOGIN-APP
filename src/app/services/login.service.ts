@@ -39,6 +39,7 @@ export class LoginService {
 
   login(): void {
     localStorage.setItem(AUTH_TOKEN_KEY, 'your-token');
+    this.#timerService.startLogoutTimer();
     this.isLoggedInSubject$.next(true);
   }
 
