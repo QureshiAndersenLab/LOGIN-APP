@@ -13,13 +13,9 @@ import { Router } from '@angular/router';
 import { OtpInputDirective } from '@directives';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoginService, OTPService } from '@services';
-import {
-  AUTH_TOKEN_KEY,
-  LOGIN_EXPIRY_TIME_KEY,
-  OTP_LENGTH,
-} from '@shared/constants';
+import { OTP_LENGTH } from '@shared/constants';
 import { AppRoutes } from 'app/app.routes';
-import { TimerService } from 'app/services/timer.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'allianz-otp',
@@ -40,13 +36,10 @@ export class OtpComponent implements OnInit {
   readonly #destroyRef = inject(DestroyRef);
   readonly newOTPRequested = signal<boolean>(false);
   readonly email = this.#router.getCurrentNavigation()?.extras.state?.['email'];
-  readonly isCheckingOTP = signal<boolean>(false);
 
   readonly isOTPInvalid = this.#otpService.isOTPInvalid;
   readonly isExpired = this.#otpService.isExpired;
   readonly errMsgTranslationKey = this.#otpService.errMsgTranslationKey;
-
-  readonly #timerService = inject(TimerService);
 
   ngOnInit(): void {
     if (!this.email || !this.#otpService.receivedOTP()) {
@@ -93,14 +86,12 @@ export class OtpComponent implements OnInit {
       .map((key) => this.otpForm.get(key)?.value)
       .join('');
 
-    this.isCheckingOTP.set(true);
     this.#otpService
       .validateOTP(enteredOTP)
-      .subscribe(({ isValid, accessToken }) => {
-        this.isCheckingOTP.set(false);
+      .pipe(take(1))
+      .subscribe(({ isValid }) => {
         if (isValid) {
           this.#loginService.login();
-          this.#timerService.startLogoutTimer().subscribe();
           this.#router.navigate([AppRoutes.Dashboard]);
         }
       });
