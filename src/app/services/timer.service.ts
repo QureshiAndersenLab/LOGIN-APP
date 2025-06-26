@@ -1,6 +1,7 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { LOGIN_EXPIRY_TIME_KEY, LOGOUT_EXPIRY_SEC } from '@shared/constants';
 import { interval, Subject, takeUntil, tap } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +9,21 @@ import { interval, Subject, takeUntil, tap } from 'rxjs';
 export class TimerService implements OnDestroy {
   readonly stop$ = new Subject<void>();
   readonly sessionExpired$ = new Subject<void>();
+  readonly #localStorageService = inject(LocalStorageService);
 
   startLogoutTimer(): void {
     this.stopLogoutTimer();
 
-    let loginEndTimeStamp = Number(localStorage.getItem(LOGIN_EXPIRY_TIME_KEY));
+    let loginEndTimeStamp = Number(
+      this.#localStorageService.getItem(LOGIN_EXPIRY_TIME_KEY)
+    );
 
     if (!loginEndTimeStamp || isNaN(loginEndTimeStamp)) {
       loginEndTimeStamp = Date.now() + LOGOUT_EXPIRY_SEC * 1000;
-      localStorage.setItem(LOGIN_EXPIRY_TIME_KEY, loginEndTimeStamp.toString());
+      this.#localStorageService.setItem(
+        LOGIN_EXPIRY_TIME_KEY,
+        loginEndTimeStamp.toString()
+      );
     }
 
     let warned = false;

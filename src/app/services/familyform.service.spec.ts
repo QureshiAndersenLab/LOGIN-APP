@@ -51,7 +51,7 @@ describe('FamilyformService', () => {
       localStorage.setItem(FAMILY_FORM_STORAGE_KEY, JSON.stringify(data));
 
       const result = service.loadFromLocalStorage();
-      expect(result).toBe(JSON.stringify(data));
+      expect(result).toBe(JSON.stringify(data) as any);
     });
 
     it('should return correct age for a past date', () => {

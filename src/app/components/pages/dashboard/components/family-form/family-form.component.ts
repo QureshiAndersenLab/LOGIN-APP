@@ -3,9 +3,16 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnInit, signal,
+  OnInit,
+  signal,
 } from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,7 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime } from 'rxjs';
 import { FamilyFormService } from '@services';
 
-interface IFamilyMember {
+export interface IFamilyMember {
   id: string;
   dob: string;
   amount: string | null;
@@ -56,7 +63,7 @@ export class FamilyFormComponent implements OnInit {
     const savedData = this.#familyFormService.loadFromLocalStorage();
 
     if (savedData) {
-      JSON.parse(savedData).members.forEach((member: IFamilyMember) => {
+      savedData['members'].forEach((member: IFamilyMember) => {
         this.members.push(this.createMemberGroup(member));
       });
     } else {
@@ -99,7 +106,6 @@ export class FamilyFormComponent implements OnInit {
 
   calculateTotal(): void {
     const reduceAmount = (total: number, member: AbstractControl) => {
-      console.log(member)
       const dob: string = member.get('dob')?.value;
       const amt: number = Number(member.get('amount')?.value);
 
