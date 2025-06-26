@@ -8,6 +8,7 @@ import {
   APP_LANG_KEY,
 } from '@shared/constants';
 import { firstValueFrom } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class I18nService {
   readonly #translateService = inject(TranslateService);
   readonly #document = inject(DOCUMENT);
   readonly #currentLanguage = signal<Language>(DEFAULT_LANGUAGE);
+  readonly #localStorageService = inject(LocalStorageService);
 
   readonly currentLanguage: Signal<Language> =
     this.#currentLanguage.asReadonly();
@@ -24,7 +26,6 @@ export class I18nService {
   constructor() {
     this.#initializeTranslation();
   }
-
 
   async setLanguage(language: Language): Promise<void> {
     if (!this.#isValidLanguage(language)) {
@@ -40,7 +41,7 @@ export class I18nService {
     this.#document.documentElement.lang = language;
   }
 
-   async #initializeTranslation(): Promise<void> {
+  async #initializeTranslation(): Promise<void> {
     this.#translateService.addLangs(Object.values(Language));
 
     this.#translateService.setDefaultLang(DEFAULT_LANGUAGE);
@@ -50,8 +51,10 @@ export class I18nService {
     await this.setLanguage(initialLanguage);
   }
 
-   #getInitialLanguage(): Language {
-    const storedLang = this.#getStoredLanguage();
+  #getInitialLanguage(): Language {
+    const storedLang: string | null =
+      this.#localStorageService.getItem(APP_LANG_KEY);
+
     if (storedLang && this.#isValidLanguage(storedLang)) {
       return storedLang as Language;
     }
@@ -62,14 +65,6 @@ export class I18nService {
     }
 
     return DEFAULT_LANGUAGE;
-  }
-
-  #getStoredLanguage(): string | null {
-    try {
-      return localStorage.getItem(APP_LANG_KEY);
-    } catch {
-      return null;
-    }
   }
 
   #getBrowserLanguage(): Language | null {
@@ -86,7 +81,7 @@ export class I18nService {
 
   #persistLanguage(language: Language): void {
     try {
-      localStorage.setItem(APP_LANG_KEY, language);
+      this.#localStorageService.setItem(APP_LANG_KEY, language);
     } catch (error) {
       console.warn('Failed to persist language preference:', error);
     }

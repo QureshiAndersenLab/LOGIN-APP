@@ -1,19 +1,22 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FAMILY_FORM_STORAGE_KEY } from '@shared/constants';
+import { LocalStorageService } from './local-storage.service';
+import { IFamilyMember } from 'app/components/pages/dashboard/components/family-form/family-form.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FamilyFormService {
+  readonly #localStorageService = inject(LocalStorageService);
+
   saveToLocalStorage(data: FormGroup): void {
     if (data.invalid) return;
-    //can you pls create a localStorage service wrapper?
-    localStorage.setItem(FAMILY_FORM_STORAGE_KEY, JSON.stringify(data.value));
+    this.#localStorageService.setItem(FAMILY_FORM_STORAGE_KEY, data.value);
   }
 
-  loadFromLocalStorage(): string {
-    return localStorage.getItem(FAMILY_FORM_STORAGE_KEY) ?? '';
+  loadFromLocalStorage(): Record<string, Array<IFamilyMember>> | null {
+    return this.#localStorageService.getItem(FAMILY_FORM_STORAGE_KEY);
   }
 
   calculateAge(dob: string): number {
