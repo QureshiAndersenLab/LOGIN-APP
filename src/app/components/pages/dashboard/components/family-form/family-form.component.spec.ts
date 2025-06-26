@@ -4,22 +4,22 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { FamilyformComponent } from './familyform.component';
+import { FamilyFormComponent } from './family-form.component';
 import { MOCK_TRANSLATE_SERVICE_PROVIDER } from '@shared/utils';
 import { By } from '@angular/platform-browser';
 import { provideTestConfig } from '@shared/utils/provide-test-config';
 
 describe('FamilyformComponent', () => {
-  let component: FamilyformComponent;
-  let fixture: ComponentFixture<FamilyformComponent>;
+  let component: FamilyFormComponent;
+  let fixture: ComponentFixture<FamilyFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FamilyformComponent],
+      imports: [FamilyFormComponent],
       providers: [...provideTestConfig([MOCK_TRANSLATE_SERVICE_PROVIDER])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FamilyformComponent);
+    fixture = TestBed.createComponent(FamilyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

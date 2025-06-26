@@ -5,13 +5,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FamilyformComponent } from './components';
+import { FamilyFormComponent } from './components';
 import { LOGIN_EXPIRY_TIME_KEY } from '@shared/constants';
 import { TimerService } from 'app/services/timer.service';
 
 @Component({
   selector: 'allianz-dashboard',
-  imports: [FamilyformComponent, TranslateModule],
+  imports: [FamilyFormComponent,TranslateModule],
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -3,9 +3,9 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnInit,
+  OnInit, signal,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime } from 'rxjs';
-import { FamilyformService } from '@services';
+import { FamilyFormService } from '@services';
 
 interface IFamilyMember {
   id: string;
@@ -26,8 +26,8 @@ interface IFamilyMember {
 }
 
 @Component({
-  selector: 'allianz-familyform',
-  templateUrl: './familyform.component.html',
+  selector: 'allianz-family-form',
+  templateUrl: './family-form.component.html',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -41,16 +41,16 @@ interface IFamilyMember {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FamilyformComponent implements OnInit {
+export class FamilyFormComponent implements OnInit {
   readonly #fb = inject(FormBuilder);
-  readonly #familyFormService = inject(FamilyformService);
+  readonly #familyFormService = inject(FamilyFormService);
   readonly #destroyRef = inject(DestroyRef);
 
-  familyForm: FormGroup = this.#fb.group({
+  readonly familyForm: FormGroup = this.#fb.group({
     members: this.#fb.array([]),
   });
 
-  totalPrice: number = 0;
+  readonly totalPrice = signal(0);
 
   ngOnInit(): void {
     const savedData = this.#familyFormService.loadFromLocalStorage();
@@ -98,7 +98,8 @@ export class FamilyformComponent implements OnInit {
   }
 
   calculateTotal(): void {
-    this.totalPrice = this.members.controls.reduce((total, member) => {
+    const reduceAmount = (total: number, member: AbstractControl) => {
+      console.log(member)
       const dob: string = member.get('dob')?.value;
       const amt: number = Number(member.get('amount')?.value);
 
@@ -109,6 +110,8 @@ export class FamilyformComponent implements OnInit {
 
       const mult: number = this.#familyFormService.getMultiplierByAge(age);
       return total + amt * mult;
-    }, 0);
+    };
+
+    this.totalPrice.set(this.members.controls.reduce(reduceAmount, 0));
   }
 }

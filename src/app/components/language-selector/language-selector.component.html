@@ -38,7 +38,7 @@
     data-testId="lang-dropdown"
     class="absolute right-0 mt-2 w-20 sm:w-24 bg-white border border-gray-200 rounded shadow-md z-50"
   >
-    @for (lang of availableLanguages(); track trackByLanguage($index, lang)) {
+    @for (lang of availableLanguages(); track lang.code) {
     <li
       (click)="selectLanguage(lang.code)"
       class="flex gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-xs sm:text-sm"

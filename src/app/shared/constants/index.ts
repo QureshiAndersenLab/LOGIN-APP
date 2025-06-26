@@ -1,3 +1,3 @@
 export * from './language.constants';
 export * from './login.constants';
-export * from './localstorage.constants';
+export * from './local-storage.constants';

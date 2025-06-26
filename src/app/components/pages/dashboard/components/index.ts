@@ -1,1 +1,1 @@
-export { FamilyformComponent } from './familyform';
+export { FamilyFormComponent } from './family-form';

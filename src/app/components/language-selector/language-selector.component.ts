@@ -5,12 +5,10 @@ import {
   inject,
   HostListener,
   ElementRef,
-  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Language } from '@shared/constants';
-import { LanguageInfo } from '@shared/models/language.model';
 import { I18nService } from '@services';
 
 @Component({
@@ -26,14 +24,7 @@ export class LanguageSelectorComponent {
   readonly showDropdown = signal(false);
 
   readonly currentLanguage = this.#i18nService.currentLanguage;
-  readonly currentLanguageInfo = this.#i18nService.currentLanguageInfo;
   readonly availableLanguages = this.#i18nService.availableLanguages;
-
-  readonly dropdownLanguages = computed(() =>
-    this.availableLanguages().filter(
-      (lang) => lang.code !== this.currentLanguage()
-    )
-  );
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
@@ -54,9 +45,5 @@ export class LanguageSelectorComponent {
   async selectLanguage(language: Language): Promise<void> {
     await this.#i18nService.setLanguage(language);
     this.showDropdown.set(false);
-  }
-
-  trackByLanguage(index: number, language: LanguageInfo): Language {
-    return language.code;
   }
 }

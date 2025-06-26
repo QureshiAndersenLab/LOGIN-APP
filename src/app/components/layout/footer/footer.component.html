@@ -7,7 +7,7 @@
       data-testId="footer-logo"
     />
 
-    @for (link of footerLinks; track $index) {
+    @for (link of footerLinks; track link.name) {
     <a
       href="{{ link.link }}"
       class="font-[550] sm:text-base text-[12px] leading-6 tracking-[0.2px]"

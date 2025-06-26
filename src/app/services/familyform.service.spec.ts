@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { FamilyformService } from './familyform.service';
+import { FamilyFormService } from './family-form.service';
 import {
   FormBuilder,
   FormGroup,
@@ -9,21 +9,21 @@ import {
 import { FAMILY_FORM_STORAGE_KEY } from '@shared/constants';
 
 describe('FamilyformService', () => {
-  let service: FamilyformService;
+  let service: FamilyFormService;
   let formBuilder: FormBuilder;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      providers: [FamilyformService],
+      providers: [FamilyFormService],
     });
 
-    service = TestBed.inject(FamilyformService);
+    service = TestBed.inject(FamilyFormService);
     formBuilder = TestBed.inject(FormBuilder);
     localStorage.clear();
   });
 
-  describe('FamilyformService', () => {
+  describe('FamilyFormService', () => {
     it('should save valid form data to localStorage', () => {
       const form: FormGroup = formBuilder.group({
         members: [[]],
