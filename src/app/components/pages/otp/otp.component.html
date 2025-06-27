@@ -31,6 +31,7 @@
     <div class="flex gap-2 justify-between" otp-group>
       @for(ctrl of otpControls; track $index){
       <input
+        [attr.aria-label]="'Digit ' + ($index + 1) + ' of 5 for OTP'"
         formControlName="{{ ctrl }}"
         maxlength="1"
         class="w-[32px] md:w-[56px] h-[42px] md:h-[72px] text-center border border-[#1F1F1F] rounded-lg text-sm md:text-xl text-sm sm:text-[30px] font-[550] leading-[24px] tracking-[0.2px]"

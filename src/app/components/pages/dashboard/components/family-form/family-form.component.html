@@ -39,6 +39,7 @@
 
         @if(members.length > 1){
         <button
+          aria-label="Remove member"
           data-testId="remove-member-btn"
           (click)="removeMember(i)"
           class="text-red-600 rounded-lg hover:text-red-700"
