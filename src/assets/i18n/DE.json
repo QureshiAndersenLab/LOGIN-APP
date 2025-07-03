@@ -45,7 +45,8 @@
       "addMember": "Mitglied hinzufügen",
       "dob": "Geburtsdatum",
       "dobFormat": "MM/TT/JJJJ",
-      "amount": "Betrag"
+      "amount": "Betrag",
+      "removeMember": "Remove member"
     }
   },
   "messages": {

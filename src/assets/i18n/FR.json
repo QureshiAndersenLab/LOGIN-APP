@@ -45,7 +45,8 @@
       "addMember": "Ajouter un membre",
       "dob": "Date de naissance",
       "dobFormat": "MM/JJ/AAAA",
-      "amount": "Montant"
+      "amount": "Montant",
+      "removeMember": "Supprimer le membre"
     }
   },
   "messages": {
