@@ -1,6 +1,6 @@
 <app-navbar />
 
-<div class="flex flex-col md:flex-row h-screen">
+<main class="flex flex-col md:flex-row h-screen">
   <div
     data-testId="insurance-lady-img"
     class="relative w-full md:w-[600px] h-full"
@@ -9,9 +9,10 @@
       src="../../../../assets/allianz-login.png"
       alt="Insurance Lady"
       class="w-full h-full object-cover absolute"
+      aria-label="Insurance Lady image"
     />
     <div
-      class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 bg-black/40"
+      class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 bg-black/55"
     >
       <h2 class="text-[18px] md:text-[28px] tracking-[0.2px]">
         {{ "side.welcome" | translate }}
@@ -41,6 +42,6 @@
       <router-outlet />
     </div>
   </div>
-</div>
+</main>
 
 <app-footer />
