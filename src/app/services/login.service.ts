@@ -43,6 +43,7 @@ export class LoginService implements OnDestroy {
     this.#localStorageService.setItem(AUTH_TOKEN_KEY, 'your-token');
     this.#timerService.startLogoutTimer();
     this.isLoggedInSubject$.next(true);
+    this.#router.navigate([AppRoutes.Dashboard]);
   }
 
   logout(): void {

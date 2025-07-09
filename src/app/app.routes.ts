@@ -11,19 +11,28 @@ export const routes: Routes = [
   {
     path: AppRoutes.Login,
     loadComponent: () =>
-      import('./components').then(({ LoginComponent }) => LoginComponent),
-  },
-  {
-    path: AppRoutes.OTP,
-    loadComponent: () =>
-      import('./components').then(({ OtpComponent }) => OtpComponent),
+      import('./components').then(
+        ({ AuthLayoutComponent }) => AuthLayoutComponent
+      ),
+    children: [
+      {
+        path: AppRoutes.Login,
+        loadComponent: () =>
+          import('./components').then(({ LoginComponent }) => LoginComponent),
+      },
+      {
+        path: AppRoutes.OTP,
+        loadComponent: () =>
+          import('./components').then(({ OtpComponent }) => OtpComponent),
+      },
+    ],
   },
   {
     path: AppRoutes.Dashboard,
     canActivate: [loginGuard],
     loadComponent: () =>
-      import('./components').then(
-        ({ DashboardComponent }) => DashboardComponent
+      import('./components/layout').then(
+        ({ DashboardLayoutComponent }) => DashboardLayoutComponent
       ),
   },
 ];
