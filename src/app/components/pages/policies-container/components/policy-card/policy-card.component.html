@@ -1,0 +1,84 @@
+<div class="flex flex-col gap-4 p-2 md:p-4 border-b">
+  <div class="flex gap-3 items-center">
+    <img
+      [src]="'../../../../../../assets/icons/' + policy().icon"
+      [alt]="policy().icon"
+    />
+    <p
+      class="text-lg md:text-[20px] font-[550] leading-[28px] tracking-[0.2px]"
+    >
+      {{ policy().name }}
+    </p>
+    <p
+      class="flex gap-1 items-center py-1 pr-2 pl-1 rounded-2xl"
+      [ngClass]="{
+        'bg-[#DEF8E0]': policy().status === 'Active',
+        'bg-[#FAE0E4]': policy().status === 'Canceled'
+      }"
+    >
+      <img
+        [src]="
+          policy().status === 'Active'
+            ? '../../../../../../assets/icons/green-tick-con.png'
+            : '../../../../../../assets/icons/cancelled-icon.png'
+        "
+        [alt]="policy().status"
+      />
+      <span class="max-md:text-xs">
+        {{ policy().status }}
+      </span>
+    </p>
+  </div>
+
+  <div class="flex gap-2 md:gap-3 items-center">
+    <p class="flex gap-1 text-gray-500">
+      <span
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+        >Policy number:
+      </span>
+      <strong
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+      >
+        {{ policy().policyNumber }}
+      </strong>
+    </p>
+
+    @if (policy().baseContractNumber) {
+    <p class="text-gray-500">
+      <span
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+        >Base contract number:
+      </span>
+      <strong
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+      >
+        {{ policy().baseContractNumber }}
+      </strong>
+    </p>
+    }
+
+    <p class="text-sm text-gray-500">
+      <span
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+        >Valid from:
+      </span>
+      <strong
+        class="text-sm md:text-base max-sm:leading-[24px] max-sm:tracking-[0.2px]"
+      >
+        {{ policy().validFrom }}
+      </strong>
+    </p>
+  </div>
+
+  <div class="flex items-center gap-2 md:gap-4">
+    @for (action of policy().actions; track $index) {
+    <button class="flex gap-1 items-center py-2 rounded">
+      <img
+        [src]="'../../../../../../assets/icons/' + action.icon"
+        [alt]="action.icon"
+      />
+      <span>{{ action.label }}</span>
+    </button>
+    }
+  </div>
+</div>

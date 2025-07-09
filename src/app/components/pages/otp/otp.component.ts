@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoginService, OTPService } from '@services';
 import { OTP_LENGTH } from '@shared/constants';
 import { AppRoutes } from 'app/app.routes';
-import {filter, take} from 'rxjs';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'allianz-otp',
@@ -49,7 +49,7 @@ export class OtpComponent implements OnInit {
 
   readonly otpForm = this.#formBuilder.group(
     Object.fromEntries(
-      Array.from({length: OTP_LENGTH}).map((_, i) => [
+      Array.from({ length: OTP_LENGTH }).map((_, i) => [
         i.toString(),
         ['', [Validators.required, Validators.pattern(/^\d$/)]],
       ])
@@ -88,7 +88,11 @@ export class OtpComponent implements OnInit {
 
     this.#otpService
       .validateOTP(enteredOTP)
-      .pipe(take(1), filter(({isValid}) => isValid), takeUntilDestroyed(this.#destroyRef))
+      .pipe(
+        take(1),
+        filter(({ isValid }) => isValid),
+        takeUntilDestroyed(this.#destroyRef)
+      )
       .subscribe(() => {
         this.#loginService.login();
         this.#router.navigate([AppRoutes.Dashboard]);

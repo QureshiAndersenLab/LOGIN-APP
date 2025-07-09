@@ -1,3 +1,3 @@
 export { LoginComponent } from './login';
 export { OtpComponent } from './otp';
-export { DashboardComponent } from './dashboard';
+export { PoliciesContainerComponent } from './policies-container';

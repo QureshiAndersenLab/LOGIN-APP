@@ -1,0 +1,41 @@
+<div class="flex flex-col md:flex-row h-screen w-screen">
+  <div
+    class="relative w-full md:w-[600px] h-full"
+    data-testId="insurance-lady-img"
+  >
+    <img
+      src="../../../../assets/allianz-login.png"
+      alt="Insurance Lady"
+      class="w-full h-full object-cover absolute"
+    />
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 bg-black/55"
+    >
+      <h2 class="text-[18px] md:text-[28px] tracking-[0.2px]">
+        {{ "side.welcome" | translate }}
+      </h2>
+      <h2 class="text-[32px] md:text-[40px] font-bold tracking-[0.2px]">
+        {{ "side.InsurancePortal" | translate }}
+      </h2>
+      <p
+        class="w-[350px] md:w-[450px] text-sm md:text-[20px] leading-[18px] md:leading-[24px] text-center align-middle"
+      >
+        {{ "side.InsurancePortalDesc" | translate }}
+      </p>
+    </div>
+  </div>
+
+  <div class="md:w-1/2 px-8 pt-4 md:pt-8 pb-7 md:pb-14">
+    <div class="flex items-center justify-start gap-2 text-brandBlue">
+      <img src="../../../../assets/icons/back-arrow.png" alt="Go Back Icon" />
+      <button type="button" (click)="goBack()">
+        {{ "common.back" | translate }}
+      </button>
+    </div>
+    <div
+      class="w-full flex flex-col justify-center items-center h-full max-md:pt-10"
+    >
+      <router-outlet />
+    </div>
+  </div>
+</div>

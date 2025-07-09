@@ -1,0 +1,71 @@
+<div class="flex flex-col gap-4">
+  <div class="flex items-center justify-between px-4">
+    <p class="text-xl font-medium text-3xl">My Policies</p>
+    <button
+      type="button"
+      class="border border-black font-semibold rounded py-2 px-4 md:px-6"
+      aria-label="File a new claim"
+    >
+      File Claim
+    </button>
+  </div>
+
+  <div class="border-b-[1px]"></div>
+</div>
+
+@let grouped = (policiesGroups$ | async); @if (grouped && !noPolicies()) {
+<section class="mt-8" aria-labelledby="active-policies-heading">
+  @if (grouped.active.length === 0) {
+  <p class="text-sm text-center">
+    There are no active policies associated to your account.
+  </p>
+  }@else {
+  <div class="flex flex-col gap-4">
+    @for (group of grouped.active; track group.number) {
+    <app-credit-card [creditCard]="group" />
+    }
+  </div>
+  }
+</section>
+
+<section class="mt-8" aria-labelledby="past-policies-heading">
+  <cdk-accordion>
+    <cdk-accordion-item
+      #pastPolicies="cdkAccordionItem"
+      expanded="true"
+      class="flex flex-col gap-6"
+    >
+      <button
+        class="flex justify-between items-center w-full bg-[#D5F0FB] py-3 px-4 border-t border-b border-[#2D6BD2]"
+        (click)="pastPolicies.toggle()"
+        aria-controls="past-policies-content"
+      >
+        <span class="text-sm">Past Policies</span>
+        <img
+          src="../../../../assets/icons/arrow-up.png"
+          alt="Toggle Past Policies Icon"
+        />
+      </button>
+
+      @if(pastPolicies.expanded) { @if (grouped.inactive.length===0) {
+      <p class="text-sm text-center">
+        There are no past policies associated to your account.
+      </p>
+      } @else {
+      <div class="flex flex-col gap-4">
+        @for (group of grouped.inactive; track group.number) {
+        <app-credit-card [creditCard]="group" />
+        }
+      </div>
+      } }
+    </cdk-accordion-item>
+  </cdk-accordion>
+</section>
+
+}
+
+<div class="mt-8">
+  @if (!isLoading() && noPolicies()) {
+  <app-no-policies-notification />
+  }
+</div>

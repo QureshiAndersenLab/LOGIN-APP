@@ -1,61 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   DestroyRef,
   inject,
-  OnInit,
 } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterModule } from '@angular/router';
 import { FooterComponent, NavbarComponent } from '@components';
-import { AppRoutes } from './app.routes';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { map, Observable, startWith } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { LoginService, TimerService } from '@services';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterModule,
-    CommonModule,
-    FooterComponent,
-    NavbarComponent,
-    TranslateModule,
-  ],
+  imports: [RouterModule, FooterComponent, NavbarComponent],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  readonly #router = inject(Router);
+export class AppComponent {
   readonly #timerService = inject(TimerService);
-  readonly #loginService = inject(LoginService);
   readonly #destroyRef = inject(DestroyRef);
-
-  readonly isLoggedIn$: Observable<boolean> = this.#loginService.isLoggedIn$;
-
-  readonly #routeSignal = toSignal(
-    this.#router.events.pipe(
-      startWith(null),
-      map(() => this.#router.url)
-    ),
-    { initialValue: this.#router.url }
-  );
-
-  readonly #backRoute = computed(() => {
-    const currentUrl = this.#routeSignal();
-    if (currentUrl.includes(AppRoutes.OTP)) return AppRoutes.Login;
-    return AppRoutes.Login;
-  });
+  readonly #loginService = inject(LoginService);
 
   ngOnInit(): void {
     this.#timerService.sessionExpired$
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => this.#loginService.logout());
-  }
-
-  goBack(): void {
-    this.#router.navigate([this.#backRoute()]);
   }
 }

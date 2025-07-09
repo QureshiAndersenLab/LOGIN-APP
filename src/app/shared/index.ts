@@ -1,2 +1,3 @@
 export { DEFAULT_LANGUAGE, Language } from './constants';
-export type { FooterLinks } from './models';
+export type * from './models';
+export type * from './ui';

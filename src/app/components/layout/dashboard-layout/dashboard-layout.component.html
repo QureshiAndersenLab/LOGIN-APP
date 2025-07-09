@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-5 h-full">
+  <div class="relative w-full h-[150px] md:h-[300px] overflow-hidden">
+    <img
+      src="../../../../assets/allianz-login.png"
+      alt="Insurance Lady"
+      class="w-screen h-full object-cover object-[100%_5%]"
+    />
+
+    <div
+      class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-[2px] sm:gap-[8px] text-white text-center px-4"
+    >
+      <h2 class="text-xl md:text-3xl font-semibold">Good afternoon</h2>
+      <p class="max-w-[500px] text-sm md:text-lg">
+        View your policies, file and track a claim via your online portal.
+      </p>
+      <div class="flex items-center gap-2 text-sm md:text-base">
+        <hr class="w-[140px] md:w-[388px] border-white" />
+        <img src="../../../../assets/icons/x-ixon.png" alt="X-Icon" />
+        <hr class="w-[140px] md:w-[388px] border-white" />
+      </div>
+      <div class="flex gap-2 items-center">
+        <img
+          src="../../../../assets/icons/location-icon.png"
+          alt="Munich Location"
+        />
+        <p class="max-w-[500px] text-sm md:text-lg">Munich</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-6 md:gap-8 justify-center items-center px-4">
+    <app-tabs-container>
+      <app-tab tabTitle="Policies">
+        <app-policies-container />
+      </app-tab>
+      <app-tab tabTitle="Claims"></app-tab>
+      <app-tab tabTitle="Services"></app-tab>
+    </app-tabs-container>
+  </div>
+</div>

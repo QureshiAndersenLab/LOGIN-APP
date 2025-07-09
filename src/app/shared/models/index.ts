@@ -1,2 +1,3 @@
-export type { FooterLinks } from './general.model';
-export type { QuoteResponse } from './login.model';
+export type * from './general.model';
+export type * from './login.model';
+export type * from './policies.model';
