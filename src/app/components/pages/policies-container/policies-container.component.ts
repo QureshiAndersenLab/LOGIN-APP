@@ -16,7 +16,7 @@ import {
 } from './components';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { TranslateModule } from '@ngx-translate/core';
-import { groupPolicies } from '@shared/utils';
+import { groupPolicies } from '@shared/utils/operators';
 
 @Component({
   selector: 'app-policies-container',
