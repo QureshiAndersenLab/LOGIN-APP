@@ -1,12 +1,14 @@
 <div class="flex flex-col gap-4">
   <div class="flex items-center justify-between px-4">
-    <p class="text-xl font-medium text-3xl">My Policies</p>
+    <p class="text-xl font-medium text-3xl">
+      {{ "pages.policies.myPolilcies" | translate }}
+    </p>
     <button
       type="button"
       class="border border-black font-semibold rounded py-2 px-4 md:px-6"
       aria-label="File a new claim"
     >
-      File Claim
+      {{ "pages.policies.fileClaim" | translate }}
     </button>
   </div>
 
@@ -17,7 +19,7 @@
 <section class="mt-8" aria-labelledby="active-policies-heading">
   @if (grouped.active.length === 0) {
   <p class="text-sm text-center">
-    There are no active policies associated to your account.
+    {{ "pages.policies.noActivePolicies" | translate }}
   </p>
   }@else {
   <div class="flex flex-col gap-4">
@@ -40,7 +42,9 @@
         (click)="pastPolicies.toggle()"
         aria-controls="past-policies-content"
       >
-        <span class="text-sm">Past Policies</span>
+        <span class="text-sm">
+          {{ "pages.policies.pastPolicies" | translate }}
+        </span>
         <img
           src="../../../../assets/icons/arrow-up.png"
           alt="Toggle Past Policies Icon"
@@ -49,7 +53,7 @@
 
       @if(pastPolicies.expanded) { @if (grouped.inactive.length===0) {
       <p class="text-sm text-center">
-        There are no past policies associated to your account.
+        {{ "pages.policies.noPastPolicies" | translate }}
       </p>
       } @else {
       <div class="flex flex-col gap-4">

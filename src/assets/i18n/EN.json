@@ -15,8 +15,12 @@
       "privacyStatement": "Privacy statement",
       "cookiePolicy": "Cookie policy"
     },
-    "navbar": {
-      "logout": "Logout"
+    "dashboard": {
+      "goodAfternoon": "Good afternoon",
+      "viewYourPolicies": "View your policies, file and track a claim via your online portal.",
+      "policies": "Policies",
+      "claims": "Claims",
+      "services": "Services"
     }
   },
   "pages": {
@@ -39,18 +43,17 @@
       "needHelp": "Need Help?",
       "contact": "Contact Allianz Support"
     },
-    "dashboard": {
-      "welcome": "Welcome to Allianz!",
-      "commonPrice": "Common Price",
-      "addMember": "Add Member",
-      "dob": "Date of Birth",
-      "dobFormat": "MM/DD/YYYY",
-      "amount": "Amount",
-      "removeMember": "Mitglied entfernen"
+    "policies": {
+      "myPolilcies": "My Policies",
+      "fileClaim": "File Claim",
+      "noPoliciesFound": "No Policies Found",
+      "noInsurancePolicies": "It looks like you don't have any insurance policies with us yet. If you want to explore your options, please contact Allianz Support.",
+      "pastPolicies": "Past Policies",
+      "noPastPolicies": "There are no past policies associated to your account.",
+      "noActivePolicies": "There are no active policies associated to your account.",
+      "policyNumber": "Policy number:",
+      "baseContractNumber": "Base contract number",
+      "validFrom": "Valid from"
     }
-  },
-  "messages": {
-    "welcomeUser": "Welcome, {{name}}!",
-    "itemsSelected": "You have selected {{count}} items"
   }
 }

@@ -17,6 +17,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 export const KANYE_API_URL = new InjectionToken<string>('KANYE_API_URL');
+export const IPWHO_API_URL = new InjectionToken<string>('IPWHO_API_URL');
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,5 +39,6 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     { provide: KANYE_API_URL, useValue: 'https://api.kanye.rest' },
+    { provide: IPWHO_API_URL, useValue: 'https://ipwho.is/' },
   ],
 };
