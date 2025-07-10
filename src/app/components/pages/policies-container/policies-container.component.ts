@@ -6,15 +6,17 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ICreditCardPolicyGroup, IPoliciesGroupState } from '@shared/models';
+import { IPoliciesGroupState } from '@shared/models';
 import { PoliciesService } from '@services';
-import { map, shareReplay, startWith, catchError, tap } from 'rxjs';
+import { shareReplay, startWith, catchError, tap } from 'rxjs';
 import { of } from 'rxjs';
 import {
   CreditCardComponent,
   NoPoliciesNotificationComponent,
 } from './components';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { TranslateModule } from '@ngx-translate/core';
+import { groupPolicies } from '@shared/utils';
 
 @Component({
   selector: 'app-policies-container',
@@ -23,6 +25,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     CreditCardComponent,
     NoPoliciesNotificationComponent,
     CdkAccordionModule,
+    TranslateModule,
   ],
   templateUrl: './policies-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +45,7 @@ export class PoliciesContainerComponent {
   });
 
   readonly policiesGroups$ = this.#policiesService.getPolicies().pipe(
-    map((groups) => this.#groupPolicies(groups)),
+    groupPolicies(),
     tap((result) => {
       this.policiesData.set(result);
       this.isLoading.set(false);
@@ -55,28 +58,4 @@ export class PoliciesContainerComponent {
     startWith({ active: [], inactive: [] }),
     shareReplay(1)
   );
-
-  readonly #groupPolicies = (
-    groups: ICreditCardPolicyGroup[]
-  ): IPoliciesGroupState => {
-    return groups.reduce(
-      (acc, group) => {
-        const hasActivePolicies = group.policies.some(
-          (policy) => policy.status === 'Active'
-        );
-
-        if (hasActivePolicies) {
-          acc.active.push(group);
-        } else {
-          acc.inactive.push(group);
-        }
-
-        return acc;
-      },
-      {
-        active: [] as ICreditCardPolicyGroup[],
-        inactive: [] as ICreditCardPolicyGroup[],
-      }
-    );
-  };
 }

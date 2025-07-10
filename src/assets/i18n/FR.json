@@ -15,8 +15,12 @@
       "privacyStatement": "Déclaration de confidentialité",
       "cookiePolicy": "Politique de cookies"
     },
-    "navbar": {
-      "logout": "Déconnexion"
+    "dashboard": {
+      "goodAfternoon": "Bonjour",
+      "viewYourPolicies": "Consultez vos polices, déposez et suivez une réclamation via votre portail en ligne.",
+      "policies": "Polices",
+      "claims": "Réclamations",
+      "services": "Services"
     }
   },
   "pages": {
@@ -39,18 +43,17 @@
       "needHelp": "Besoin d'aide ?",
       "contact": "Contacter le support Allianz"
     },
-    "dashboard": {
-      "welcome": "Bienvenue chez Allianz !",
-      "commonPrice": "Prix commun",
-      "addMember": "Ajouter un membre",
-      "dob": "Date de naissance",
-      "dobFormat": "MM/JJ/AAAA",
-      "amount": "Montant",
-      "removeMember": "Supprimer le membre"
+    "policies": {
+      "myPolilcies": "Mes polices",
+      "fileClaim": "Déposer une réclamation",
+      "pastPolicies": "Polices passées",
+      "noActivePolicies": "Aucune police active n'est associée à votre compte.",
+      "noPoliciesFound": "Aucune police trouvée",
+      "noPastPolicies": "Aucune police passée n'est associée à votre compte.",
+      "policyNumber": "Numéro de police :",
+      "baseContractNumber": "Numéro de contrat de base",
+      "validFrom": "Valide à partir du",
+      "noInsurancePolicies": "Il semble que vous n'ayez pas encore de police d'assurance chez nous. Si vous souhaitez explorer vos options, veuillez contacter le support Allianz."
     }
-  },
-  "messages": {
-    "welcomeUser": "Bienvenue, {{name}} !",
-    "itemsSelected": "Vous avez sélectionné {{count}} éléments"
   }
 }

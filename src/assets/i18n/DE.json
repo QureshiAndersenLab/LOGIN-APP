@@ -15,8 +15,12 @@
       "privacyStatement": "Datenschutzerklärung",
       "cookiePolicy": "Cookie-Richtlinie"
     },
-    "navbar": {
-      "logout": "Abmelden"
+    "dashboard": {
+      "goodAfternoon": "Guten Nachmittag",
+      "viewYourPolicies": "Sehen Sie Ihre Policen ein, reichen Sie eine Schadensmeldung ein und verfolgen Sie diese über Ihr Online-Portal.",
+      "policies": "Policen",
+      "claims": "Schäden",
+      "services": "Dienstleistungen"
     }
   },
   "pages": {
@@ -39,18 +43,17 @@
       "needHelp": "Brauchen Sie Hilfe?",
       "contact": "Kontaktieren Sie den Allianz-Support"
     },
-    "dashboard": {
-      "welcome": "Willkommen bei Allianz!",
-      "commonPrice": "Gemeinsamer Preis",
-      "addMember": "Mitglied hinzufügen",
-      "dob": "Geburtsdatum",
-      "dobFormat": "MM/TT/JJJJ",
-      "amount": "Betrag",
-      "removeMember": "Remove member"
+    "policies": {
+      "myPolilcies": "Meine Policen",
+      "fileClaim": "Schaden melden",
+      "pastPolicies": "Frühere Policen",
+      "noActivePolicies": "Es sind keine aktiven Policen mit Ihrem Konto verknüpft.",
+      "noPoliciesFound": "Keine Policen gefunden",
+      "noPastPolicies": "Es sind keine früheren Policen mit Ihrem Konto verknüpft.",
+      "policyNumber": "Policennummer:",
+      "baseContractNumber": "Basisvertragsnummer",
+      "validFrom": "Gültig ab",
+      "noInsurancePolicies": "Es sieht so aus, als hätten Sie noch keine Versicherungspolicen bei uns. Wenn Sie Ihre Optionen erkunden möchten, kontaktieren Sie bitte den Allianz-Support."
     }
-  },
-  "messages": {
-    "welcomeUser": "Willkommen, {{name}}!",
-    "itemsSelected": "Sie haben {{count}} Elemente ausgewählt"
   }
 }
